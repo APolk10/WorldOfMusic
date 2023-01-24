@@ -49,6 +49,9 @@ table {
 }
 
 /* App */
+.container {
+	height: 100vh;
+}
 .title {
 	font-size: 8vw;
 	margin-left: 4vw;

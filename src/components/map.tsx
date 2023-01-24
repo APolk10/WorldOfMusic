@@ -22,30 +22,16 @@ const styleCountry: object = {
 function Map () {
   return (
     <div className='mapContainer'>
-      {/* <ComposableMap className='map' projection='geoEqualEarth'>
-        <ZoomableGroup>
-          <Geographies  geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                style={styleCountry}
-                />
-              ))
-            }
-          </Geographies>
-        </ZoomableGroup>
-      </ComposableMap> */}
       <Globe
           // pointsData={myData}
-          width={6000}
+          width={1400}
           backgroundColor='black'
-          polygonsData={[]}
+          pointsData={[]}
           globeImageUrl={'images/worldMap.jpg'}
+          showGraticules={true}
+          showAtmosphere={true}
 
-        />,
-        myDOMElement
+        />
     </div>
   )
 }
