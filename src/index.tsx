@@ -13,7 +13,6 @@ function App () {
         <Map />
         <Analytics />
       </div>
-
     </div>
   )
 }
