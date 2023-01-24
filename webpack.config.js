@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.jsx',
+  entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
@@ -10,15 +10,18 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(jsx|js)$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
       }
     ]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
   },
   devtool: 'eval-cheap-module-source-map',
   devServer: {

@@ -1,8 +1,8 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import NavBar from './components/navBar.jsx'
-import Map from './components/map.jsx'
-import Analytics from './components/analytics.jsx'
+import NavBar from './components/navBar'
+import Map from './components/map'
+import Analytics from './components/analytics'
 
 function App () {
   return (
