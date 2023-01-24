@@ -7,10 +7,13 @@ import Analytics from './components/analytics'
 function App () {
   return (
     <div className="container">
-      <h1>World of Music</h1>
       <NavBar />
-      <Map />
-      <Analytics />
+      <div>
+        <h1 className='title'>World of Music</h1>
+        <Map />
+        <Analytics />
+      </div>
+
     </div>
   )
 }
