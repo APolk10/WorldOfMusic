@@ -1,6 +1,6 @@
-import { NONAME } from 'dns'
 import * as React from 'react'
-import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps'
+import Globe from'react-globe.gl'
 
 const geoUrl: string = 'https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json'
 
@@ -22,19 +22,30 @@ const styleCountry: object = {
 function Map () {
   return (
     <div className='mapContainer'>
-      <ComposableMap className='map'>
-        <Geographies  geography={geoUrl}>
-          {({ geographies }) =>
-            geographies.map((geo) => (
-              <Geography
-              key={geo.rsmKey}
-              geography={geo}
-              style={styleCountry}
-              />
-            ))
-          }
-        </Geographies>
-      </ComposableMap>
+      {/* <ComposableMap className='map' projection='geoEqualEarth'>
+        <ZoomableGroup>
+          <Geographies  geography={geoUrl}>
+            {({ geographies }) =>
+              geographies.map((geo) => (
+                <Geography
+                key={geo.rsmKey}
+                geography={geo}
+                style={styleCountry}
+                />
+              ))
+            }
+          </Geographies>
+        </ZoomableGroup>
+      </ComposableMap> */}
+      <Globe
+          // pointsData={myData}
+          width={6000}
+          backgroundColor='black'
+          polygonsData={[]}
+          globeImageUrl={'images/worldMap.jpg'}
+
+        />,
+        myDOMElement
     </div>
   )
 }

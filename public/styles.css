@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: rgb(36, 35, 35);
 }
 ol, ul {
 	list-style: none;
@@ -56,18 +57,27 @@ table {
 .navbar {
 	display: flex;
 	justify-content: right;
+	justify-content: space-around;
+	align-items: center;
 	position: fixed;
-	font-size: 4vw;
+	border: white 2px solid;
+	color: white;
+	font-size: 2vw;
 	margin-top: -2vh;
-	width: 95vw;
+	margin-left: 60vw;
+	z-index: 15;
+	width: 35vw;
 	height: 10vh;
 }
 .mapContainer{
 	display: flex;
 	justify-content: center;
-	margin-left: -5vw;
+	margin-top: 5vh;
 }
 .map {
+	background-color: rgba(26, 26, 235, 0.45);
+	border: 10px solid burlywood;
+	margin-top: 5vh;
 	width: 70vw;
 	height: auto;
 }
