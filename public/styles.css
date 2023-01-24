@@ -72,18 +72,8 @@ table {
 	width: 35vw;
 	height: 10vh;
 }
-.mapContainer{
+.mapContainer {
 	display: flex;
 	justify-content: center;
 	margin-top: 5vh;
-}
-.map {
-	background-color: rgba(26, 26, 235, 0.45);
-	border: 10px solid burlywood;
-	margin-top: 5vh;
-	width: 70vw;
-	height: auto;
-}
-#countries:hover {
-	background-color: red;
 }
