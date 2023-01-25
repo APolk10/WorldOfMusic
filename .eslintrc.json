@@ -16,7 +16,7 @@
     "plugins": [
         "react"
     ],
-    "ignorePatterns": ["data.js"],
+    "ignorePatterns": ["data.js","mapOverlay.js"],
     "rules": {
     }
 }
