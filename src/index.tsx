@@ -4,7 +4,7 @@ import NavBar from './components/navBar'
 import Map from './components/map'
 import Analytics from './components/analytics'
 
-function App () {
+const App: React.FC = () => {
   return (
     <div className="container">
       <NavBar />

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-function Analytics () {
+const Analytics: React.FC = () => {
   return (
     <div className='analyticsBar'>Analytics Placeholder</div>
   )

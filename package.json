@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/APolk10/WorldOfMusic#readme",
   "dependencies": {
+    "@types/geojson": "^7946.0.10",
     "@types/jest": "^29.2.6",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",

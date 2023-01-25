@@ -18,6 +18,10 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
       }
+      // {
+      //   test: /\.geojson$/,
+      //   loader: 'json-loader'
+      // }
     ]
   },
   resolve: {
