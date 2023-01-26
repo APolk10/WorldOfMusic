@@ -11,10 +11,14 @@ const app: Express = express();
 const port = process.env.PORT;
 
 app.use(cors<Request>());
-app.use(express.json())
+app.use(express.json());
 
-app.get('/getCountryData', (req: Request, res: Response) => {
-  console.log('server GET successful')
+const url: string = 'https://musicbrainz.org/ws/2/';
+
+app.get('/getCountryData/:country', (req: Request, res: Response) => {
+  let isoCode: string = req.params.country;
+  axios.get(`${url}artist/?query=country:${isoCode}`)
+    .then((response: { data: {} }) => res.status(200).send(response.data))
 })
 
 app.listen(port);

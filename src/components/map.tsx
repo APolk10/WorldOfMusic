@@ -6,14 +6,21 @@ import axios from 'axios';
 
 const Map: React.FC = () => {
   const[countries, setCountries] = useState({ features: []});
-  const[countryHovered, setHovered] = useState();
+  const[countryClicked, setClicked] = useState();
+  const[selectedCountry, setCountry] = useState({});
+
+  // possibly implement a static colorset after first render of all countries
   const[colors, addColors] = useState([]);
   const[counter, incrementCounter] = useState(1);
 
 
   function handlePolygonClick(e: any) {
-    console.log('clicked!', e)
-    setHovered(e);
+    setClicked(e);
+    let countryISOCode: string = e.properties.ISO_A2;
+    axios.get(`http://localhost:3001/getCountryData/${countryISOCode}`)
+    .then((res: { data: {} }) => {
+      setCountry(res.data)
+    });
   }
 
   function randomRGB() {
@@ -32,20 +39,11 @@ const Map: React.FC = () => {
   }
 
   function handlePolygonHover(hex: any) {
-    if(hex) {
-      const data = hex.properties;
-      const coords = hex.bbox;
-      console.log(data.ADMIN, coords)
-    }
   }
 
   useEffect(() => {
-    // axios.get('http://localhost:3001/getCountryData')
-    //   .then((res: object) => {
-    //     console.log(res)
-    //   })
       setCountries(mapOverlay)
-  }, [countries])
+  }, [])
 
   return (
     <div className='mapContainer'>
@@ -55,7 +53,7 @@ const Map: React.FC = () => {
           hexPolygonsData={countries.features}
           hexPolygonResolution={3}
           hexPolygonColor={randomizeColor}
-          hexPolygonAltitude={(d) => d === countryHovered ? 0.1 : 0.01}
+          hexPolygonAltitude={(d) => d === countryClicked ? 0.1 : 0.01}
           onHexPolygonClick={handlePolygonClick}
           onHexPolygonHover={handlePolygonHover}
           // globeImageUrl={'images/worldMap3.jpg'}
