@@ -23,19 +23,12 @@ const Map: React.FC = () => {
     });
   }
 
-  function randomRGB() {
-    let randomColor: string = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-    return randomColor;
+  function polygonColor() {
+    return '#325240';
   }
 
-  function randomizeColor() {
-    // 177 is the limit
-    // if (colors.length >= 177) {
-    //   counter + 1;
-    //   return colors[counter - 1];
-    // }
-    let randomColor: string = randomRGB();
-    return randomColor;
+  function polygonOutline() {
+    return 'black';
   }
 
   function handlePolygonHover(hex: any) {
@@ -50,15 +43,14 @@ const Map: React.FC = () => {
       <Globe
           width={1400}
           backgroundColor='black'
-          hexPolygonsData={countries.features}
-          hexPolygonResolution={3}
-          hexPolygonColor={randomizeColor}
-          hexPolygonAltitude={(d) => d === countryClicked ? 0.1 : 0.01}
-          onHexPolygonClick={handlePolygonClick}
-          onHexPolygonHover={handlePolygonHover}
-          // globeImageUrl={'images/worldMap3.jpg'}
-          showGraticules={true}
-          hexPolygonsTransitionDuration={100}
+          globeImageUrl={'images/worldMap2.jpg'}
+          polygonsData={countries.features}
+          polygonCapColor={polygonColor}
+          polygonSideColor={polygonOutline}
+          polygonStrokeColor={polygonOutline}
+          polygonAltitude={(d) => d === countryClicked ? 0.15 : 0.01}
+          onPolygonClick={handlePolygonClick}
+          onPolygonHover={handlePolygonHover}
           showAtmosphere={true}
         />
     </div>
