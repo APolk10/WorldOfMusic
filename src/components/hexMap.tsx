@@ -5,7 +5,7 @@ import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 
 const HexMap: React.FC = () => {
-  const[countries, setCountries] = useState({ features: [] });
+  const[countries, setCountries] = useState(mapOverlay);
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
 
@@ -37,7 +37,7 @@ const HexMap: React.FC = () => {
   }
 
   useEffect(() => {
-    setCountries(mapOverlay)
+
 }, [])
 
   return (
@@ -45,7 +45,7 @@ const HexMap: React.FC = () => {
       <Globe
         width={1400}
         backgroundColor='black'
-        globeImageUrl={'images/worldMap2.jpg'}
+        globeImageUrl={'images/worldMap3.jpg'}
         hexPolygonsData={countries.features}
         hexPolygonsTransitionDuration={100}
         hexPolygonResolution={3}

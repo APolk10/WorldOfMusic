@@ -9,19 +9,23 @@ import Analytics from './components/analytics'
 const App: React.FC = () => {
   const[mode, setMode] = useState('standard');
 
-  function handleModeButtonClick(e: any) {
+  const handleModeButtonClick = (e: any):void => {
     console.log(e.target.value);
     setMode(e.target.value);
   }
 
+  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+    console.log(e.target.value);
+  }
+
   return (
     <div className="container">
-      <NavBar />
+      <NavBar onSearchChange={onSearchChange}/>
       <div>
         <h1 className='title'>World of Music</h1>
         <div className='mode-buttons'>
-          <button className='mode-button' onClick={handleModeButtonClick} value="solid">Solid and Peaceful</button>
-          <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hexagons with Random Colors!</button>
+          <button className='mode-button' onClick={handleModeButtonClick} value="solid">MonoColor With Borders</button>
+          <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hex Patter with Random Colors!</button>
         </div>
         {mode === 'hex' ? <HexMap /> : <Map />}
         <Analytics />

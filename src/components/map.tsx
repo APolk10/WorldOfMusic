@@ -5,7 +5,7 @@ import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 
 const Map: React.FC = () => {
-  const[countries, setCountries] = useState({ features: []});
+  const[countries, setCountries] = useState(mapOverlay);
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
 
@@ -35,7 +35,7 @@ const Map: React.FC = () => {
   }
 
   useEffect(() => {
-      setCountries(mapOverlay)
+
   }, [])
 
   return (
@@ -46,9 +46,9 @@ const Map: React.FC = () => {
           globeImageUrl={'images/worldMap2.jpg'}
           polygonsData={countries.features}
           polygonCapColor={polygonColor}
-          polygonSideColor={polygonOutline}
+          polygonSideColor={(polygonOutline)}
           polygonStrokeColor={polygonOutline}
-          polygonAltitude={(d) => d === countryClicked ? 0.15 : 0.01}
+          polygonAltitude={(polygon) => polygon === countryClicked ? 0.15 : 0.01}
           onPolygonClick={handlePolygonClick}
           onPolygonHover={handlePolygonHover}
           showAtmosphere={true}

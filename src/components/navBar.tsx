@@ -1,9 +1,13 @@
 import * as React from 'react'
 
-const NavBar: React.FC = () => {
+interface FunctionProps {
+  onSearchChange(e: React.ChangeEvent<HTMLInputElement>):void;
+}
+
+const NavBar: React.FC<FunctionProps> = ({ onSearchChange }) => {
   return (
     <div className='navbar'>
-      <div>Search</div>
+      <input id='searchForCountryInput'type='search' onChange={onSearchChange}></input>
       <div>Favorites</div>
       <div>Analytics</div>
     </div>
