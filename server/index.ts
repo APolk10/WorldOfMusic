@@ -1,7 +1,8 @@
 import * as express from 'express';
 import { Express, Request, Response } from 'express';
 import * as dotenv from 'dotenv';
-import cors = require('cors');
+import * as cors from 'cors';
+import db from '../database//index';
 
 const axios = require('axios').default;
 
@@ -19,6 +20,9 @@ app.get('/getCountryData/:country', (req: Request, res: Response) => {
   let isoCode: string = req.params.country;
   axios.get(`${url}artist/?query=country:${isoCode}`)
     .then((response: { data: {} }) => res.status(200).send(response.data))
+  db.query('\du')
+    .then((response: object) =>
+    console.log(response))
 })
 
 app.listen(port);

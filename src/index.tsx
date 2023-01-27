@@ -30,7 +30,7 @@ const App: React.FC = () => {
   )
 }
 
-const root = createRoot(document.getElementById('root'))
+const root = createRoot(document.getElementById('root') as HTMLElement)
 root.render(<App />)
 
 export default App
