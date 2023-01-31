@@ -79,18 +79,72 @@ table {
 }
 .navbar {
 	display: flex;
-	justify-content: right;
+	background-color: rgba(126, 126, 126, .5);
 	justify-content: space-around;
-	align-items: center;
+	align-items: flex-start;
 	position: fixed;
 	border: white 2px solid;
 	color: white;
 	font-size: 2vw;
 	margin-top: -2vh;
+	padding-top: 1.5vh;
 	margin-left: 60vw;
 	z-index: 15;
 	width: 35vw;
 	height: 10vh;
+}
+.navbar:hover {
+	background-color: rgba(126, 126, 126, .8);
+}
+.searchFunctionLabelBox {
+	display: flex;
+	gap: 1vh;
+	align-items: center;
+	flex-direction: column;
+}
+.searchInputs {
+	display: flex;
+	height: 3vh;
+	flex-direction: row;
+	align-items: center;
+}
+#searchForCountryInput {
+	height: 3vh;
+	width: 12vw;
+	border: none;
+	background-color: rgba(178, 178, 178, 0.52);
+}
+#searchForCountryButton {
+	background-color: rgba(245, 245, 245, 0.523);
+	border: none;
+	height: 3vh;
+}
+#searchForCountryButton:hover {
+background-color: black;
+color: whitesmoke;
+}
+.countryInfoContainer {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	align-items: center;
+	justify-content: space-around;
+	top: 12vh;
+	z-index: 5;
+	background-color: rgba(95, 158, 160, 0.863);
+	height: 76vh;
+	width: 4vw;
+	transition: 1s ease-in-out;
+}
+.countryInfoContainer:hover {
+	flex-direction: row;
+	padding-left: 10vw;
+	justify-content: space-around !important;
+	width: 100vw;
+	transition: 1s ease-in-out;
+}
+.tile {
+	width: 30vw;
 }
 .mapContainer {
 	display: flex;

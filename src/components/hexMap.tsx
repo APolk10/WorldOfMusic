@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Globe from'react-globe.gl';
+import CountryInfo from './countryInfo';
 import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 

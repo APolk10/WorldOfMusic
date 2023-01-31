@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import NavBar from './components/navBar'
-import Map from './components/map'
+import CountryInfo from './components/countryInfo'
 import HexMap from './components/hexMap'
-import Analytics from './components/analytics'
+import Map from './components/map'
+import NavBar from './components/navBar'
+import Footer from './components/footer'
 
 const App: React.FC = () => {
   const[mode, setMode] = useState('standard');
 
   const handleModeButtonClick = (e: any):void => {
-    console.log(e.target.value);
     setMode(e.target.value);
   }
 
@@ -27,9 +27,10 @@ const App: React.FC = () => {
           <button className='mode-button' onClick={handleModeButtonClick} value="solid">MonoColor With Borders</button>
           <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hex Patter with Random Colors!</button>
         </div>
+        <CountryInfo />
         {mode === 'hex' ? <HexMap /> : <Map />}
-        <Analytics />
       </div>
+      <Footer />
     </div>
   )
 }

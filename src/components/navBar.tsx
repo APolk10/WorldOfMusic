@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Analytics from './analytics';
 
 interface FunctionProps {
   onSearchChange(e: React.ChangeEvent<HTMLInputElement>):void;
@@ -7,9 +8,14 @@ interface FunctionProps {
 const NavBar: React.FC<FunctionProps> = ({ onSearchChange }) => {
   return (
     <div className='navbar'>
-      <input id='searchForCountryInput'type='search' onChange={onSearchChange}></input>
+      <label className='searchFunctionLabelBox'>Find A Country
+      <div className='searchInputs'>
+        <input id='searchForCountryInput' type='search' onChange={onSearchChange}></input>
+        <input id='searchForCountryButton' type='submit' value='Go!'></input>
+      </div>
+      </label>
       <div>Favorites</div>
-      <div>Analytics</div>
+      <Analytics />
     </div>
   )
 }

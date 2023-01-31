@@ -20,9 +20,6 @@ app.get('/getCountryData/:country', (req: Request, res: Response) => {
   let isoCode: string = req.params.country;
   axios.get(`${url}artist/?query=country:${isoCode}`)
     .then((response: { data: {} }) => res.status(200).send(response.data))
-  db.query('\du')
-    .then((response: object) =>
-    console.log(response))
 })
 
 app.listen(port);

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Globe from'react-globe.gl';
+import CountryInfo from '../components/countryInfo';
 import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 
@@ -17,9 +18,12 @@ const Map: React.FC = () => {
   function handlePolygonClick(e: any) {
     setClicked(e);
     let countryISOCode: string = e.properties.ISO_A2;
+    let countryName = e.properties.BRK_NAME;
+    // move this axios call to index to flow down properly
     axios.get(`http://localhost:3001/getCountryData/${countryISOCode}`)
     .then((res: { data: {} }) => {
       setCountry(res.data)
+      // pass the name to countryInfo
     });
   }
 
