@@ -5,7 +5,11 @@ import CountryInfo from '../components/countryInfo';
 import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 
-const Map: React.FC = () => {
+interface handleCountrySelection {
+  handleCountrySelection({}, name: string):void;
+}
+
+const Map: React.FC<handleCountrySelection> = ({ handleCountrySelection }) => {
   const[countries, setCountries] = useState(mapOverlay);
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
@@ -23,6 +27,7 @@ const Map: React.FC = () => {
     axios.get(`http://localhost:3001/getCountryData/${countryISOCode}`)
     .then((res: { data: {} }) => {
       setCountry(res.data)
+      handleCountrySelection(res.data, countryName)
       // pass the name to countryInfo
     });
   }
@@ -48,6 +53,7 @@ const Map: React.FC = () => {
           width={1400}
           backgroundColor='black'
           globeImageUrl={'images/worldMap2.jpg'}
+          backgroundImageUrl={'//unpkg.com/three-globe/example/img/night-sky.png'}
           polygonsData={countries.features}
           polygonCapColor={polygonColor}
           polygonSideColor={(polygonOutline)}

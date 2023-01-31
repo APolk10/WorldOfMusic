@@ -55,8 +55,8 @@ table {
 .title {
 	font-size: 8vw;
 	margin-left: 4vw;
-	margin-top: 5vh;
-	margin-bottom: 1vh;
+	margin-top: 2.5vh;
+	margin-bottom: 2vh;
 }
 .mode-buttons {
 	display: flex;
@@ -132,22 +132,55 @@ color: whitesmoke;
 	top: 12vh;
 	z-index: 5;
 	background-color: rgba(95, 158, 160, 0.863);
+	border-top-right-radius: 25%;
+	border-bottom-right-radius: 25%;
 	height: 76vh;
 	width: 4vw;
 	transition: 1s ease-in-out;
 }
 .countryInfoContainer:hover {
-	flex-direction: row;
-	padding-left: 10vw;
-	justify-content: space-around !important;
+	border-top-right-radius: 0%;
+	border-bottom-right-radius: 0%;
 	width: 100vw;
+	overflow-x: auto;
 	transition: 1s ease-in-out;
 }
+.carousel {
+	display: flex;
+	flex-direction: row;
+	gap: 5vw;
+	background-color: rgba(95, 158, 160, 0.863);
+	justify-content: space-around;
+	transition: 1.5s ease-in-out;
+}
+@keyframes fadeInAnimation {
+	0% {
+			opacity: 0;
+	}
+	100% {
+			opacity: 1;
+	 }
+}
 .tile {
-	width: 30vw;
+	display: flex;
+	background-color: antiquewhite;
+	height: 60vh;
+	width: 20vw;
+	animation: fadeInAnimation 3s ease;
+	animation-fill-mode: forwards;
 }
 .mapContainer {
 	display: flex;
 	justify-content: center;
 	margin-top: 5vh;
+}
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 10vh;
+	width: 80vw;
+	margin-top: 6vh;
+	margin-left: 10vw;
+	border-top: 5px solid black;
 }
