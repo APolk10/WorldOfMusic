@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Globe from'react-globe.gl';
-import CountryInfo from './countryInfo';
 import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 
@@ -17,9 +16,11 @@ const HexMap: React.FC<handleCountrySelection> = ({ handleCountrySelection }) =>
   function handlePolygonClick(e: any) {
     setClicked(e);
     let countryISOCode: string = e.properties.ISO_A2;
+    let countryName = e.properties.BRK_NAME;
     axios.get(`http://localhost:3001/getCountryData/${countryISOCode}`)
     .then((res: { data: {} }) => {
       setCountry(res.data)
+      handleCountrySelection(res.data, countryName)
     });
   }
 
@@ -40,10 +41,6 @@ const HexMap: React.FC<handleCountrySelection> = ({ handleCountrySelection }) =>
 
   function handlePolygonHover(hex: any) {
   }
-
-  useEffect(() => {
-
-}, [])
 
   return (
     <div className='mapContainer'>

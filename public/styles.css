@@ -123,7 +123,7 @@ table {
 background-color: black;
 color: whitesmoke;
 }
-.countryInfoContainer {
+.countryInfoContainer, .countryInfoContainerToggle {
 	display: flex;
 	flex-direction: column;
 	position: fixed;
@@ -138,12 +138,12 @@ color: whitesmoke;
 	width: 4vw;
 	transition: 1s ease-in-out;
 }
-.countryInfoContainer:hover {
+#countryInfoContainerToggle {
 	border-top-right-radius: 0%;
 	border-bottom-right-radius: 0%;
 	width: 100vw;
 	overflow-x: auto;
-	transition: 1s ease-in-out;
+	transition: 1.5s ease-in-out;
 }
 .carousel {
 	display: flex;
@@ -163,11 +163,12 @@ color: whitesmoke;
 }
 .tile {
 	display: flex;
+	justify-content: center;
+	align-items: center;
 	background-color: antiquewhite;
 	height: 60vh;
 	width: 20vw;
-	animation: fadeInAnimation 3s ease;
-	animation-fill-mode: forwards;
+	transition: 1.5s ease-in-out;
 }
 .mapContainer {
 	display: flex;
