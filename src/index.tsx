@@ -34,8 +34,8 @@ const App: React.FC = () => {
           <button className='mode-button' onClick={handleModeButtonClick} value="solid">Mono Color with Borders</button>
           <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hex Patter with Random Colors!</button>
         </div>
-        <CountryInfo countryArtists={countryArtists} />
-        {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection}/> : <Map handleCountrySelection={handleCountrySelection}/>}
+        <CountryInfo countryArtists={countryArtists} nameOfCountry={nameOfCountry} />
+        {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} />}
       </div>
       <Footer />
     </div>

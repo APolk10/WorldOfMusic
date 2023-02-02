@@ -141,9 +141,24 @@ color: whitesmoke;
 #countryInfoContainerToggle {
 	border-top-right-radius: 0%;
 	border-bottom-right-radius: 0%;
+	background-color: rgba(95, 158, 160, 0.863);
 	width: 100vw;
 	overflow-x: auto;
 	transition: 1.5s ease-in-out;
+}
+.openButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 3.5vh;
+	border: none;
+	font-size: 4vw;
+	width: 3.5vw;
+	height: 20vh;
+	background-color: rgba(255, 255, 255, 0);
+}
+.openButton:hover {
+	transform: scale(1.5);
 }
 .carousel {
 	display: flex;
@@ -153,21 +168,17 @@ color: whitesmoke;
 	justify-content: space-around;
 	transition: 1.5s ease-in-out;
 }
-@keyframes fadeInAnimation {
-	0% {
-			opacity: 0;
-	}
-	100% {
-			opacity: 1;
-	 }
-}
 .tile {
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	background-color: antiquewhite;
-	height: 60vh;
-	width: 20vw;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 2vh;
+	font-size: 1.75vw;
+	padding: 2vw;
+	background-color: rgb(255, 255, 255);
+	height: 55vh;
+	width: 25vw;
 	transition: 1.5s ease-in-out;
 }
 .mapContainer {

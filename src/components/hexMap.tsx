@@ -4,11 +4,11 @@ import Globe from'react-globe.gl';
 import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 
-interface handleCountrySelection {
+interface hexMapProps {
   handleCountrySelection({}, name: string):void;
 }
 
-const HexMap: React.FC<handleCountrySelection> = ({ handleCountrySelection }) => {
+const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
   const[countries, setCountries] = useState(mapOverlay);
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});

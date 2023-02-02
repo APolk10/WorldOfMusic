@@ -4,18 +4,19 @@ import MusicTile from './musicTile';
 
 interface DataProps {
   countryArtists: any[];
+  nameOfCountry: string;
 }
 
-const CountryInfo: React.FC<DataProps> = ({ countryArtists }) => {
+const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry }) => {
   const[open, setOpen] = useState(false);
   const[header, setHeader] = useState({ text: 'Click a country to find music!'})
 
-  const handleSideBarHover = () => {
+  const handleSideBarCursorEnter = () => {
     // setOpen(true);
   }
 
-  const handleSideBarLeave = () => {
-    // setOpen(false);
+  const handleSideBarCursorLeave = () => {
+    closeSideBar();
   }
 
   const handleSideBarButtonPush = () => {
@@ -34,17 +35,17 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists }) => {
 
   useEffect(() => {
     let sideBar = document.getElementById('countryInfoContainer') as HTMLDivElement;
-    sideBar.addEventListener('mouseenter', handleSideBarHover);
-    sideBar.addEventListener('mouseleave', handleSideBarLeave);
+    sideBar.addEventListener('mouseenter', handleSideBarCursorEnter);
+    sideBar.addEventListener('mouseleave', handleSideBarCursorLeave);
   },[])
 
   return (
     <div className='countryInfoContainer' id='countryInfoContainer'>
       { open === true ?
       <div className='carousel'>
-          { countryArtists.length ? countryArtists.map((artist) => { return <div className='tile'>{artist.name}</div>}) : <div className='unpopulatedTile'>{header.text}</div> }
-          <button className='closeButton' onClick={handleSideBarButtonPush}>Close</button>
-      </div> : <button className='openButton' type='button' onClick={handleSideBarButtonPush}>Arrow</button>}
+        { countryArtists.length ? countryArtists.map((artist) => <MusicTile artist={artist} nameOfCountry={nameOfCountry}/>) : <div className='placeholderText'>{header.text}</div>}
+        <button className='closeButton' onClick={handleSideBarButtonPush}>Close</button>
+      </div> : <button className='openButton' type='button' onClick={handleSideBarButtonPush}>&rarr;</button>}
     </div>
 
   )
