@@ -1,3 +1,4 @@
+import { eventNames } from 'process';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import MusicTile from './musicTile';
@@ -34,9 +35,9 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry }) => 
   }
 
   useEffect(() => {
-    let sideBar = document.getElementById('countryInfoContainer') as HTMLDivElement;
-    sideBar.addEventListener('mouseenter', handleSideBarCursorEnter);
-    sideBar.addEventListener('mouseleave', handleSideBarCursorLeave);
+    // let sideBar = document.getElementById('countryInfoContainer') as HTMLDivElement;
+    // sideBar.addEventListener('mouseenter', handleSideBarCursorEnter);
+    // sideBar.addEventListener('mouseleave', handleSideBarCursorLeave);
   },[])
 
   return (
@@ -44,7 +45,7 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry }) => 
       { open === true ?
       <div className='carousel'>
         { countryArtists.length ? countryArtists.map((artist) => <MusicTile artist={artist} nameOfCountry={nameOfCountry}/>) : <div className='placeholderText'>{header.text}</div>}
-        <button className='closeButton' onClick={handleSideBarButtonPush}>Close</button>
+        <button className='closeButton' onClick={handleSideBarButtonPush}>X</button>
       </div> : <button className='openButton' type='button' onClick={handleSideBarButtonPush}>&rarr;</button>}
     </div>
 

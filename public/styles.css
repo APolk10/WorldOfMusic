@@ -142,9 +142,21 @@ color: whitesmoke;
 	border-top-right-radius: 0%;
 	border-bottom-right-radius: 0%;
 	background-color: rgba(95, 158, 160, 0.863);
-	width: 100vw;
-	overflow-x: auto;
+	margin-left: 2vw;
+	height: 80vh;
+	width: 95.5vw;
+	overflow-x: hidden;
 	transition: 1.5s ease-in-out;
+}
+.carousel::-webkit-scrollbar {
+	height: 8vh;
+	background-color: rgba(0, 0, 0, 0.841);
+}
+.carousel::-webkit-scrollbar-thumb {
+	height: 10vh;
+	border: rgb(255, 255, 255) 2px solid;
+	width: 2vw;
+	background-color: rgba(91, 91, 91, 0.717);
 }
 .openButton {
 	display: flex;
@@ -160,13 +172,32 @@ color: whitesmoke;
 .openButton:hover {
 	transform: scale(1.5);
 }
+.closeButton {
+	position: fixed;
+	right: 4vw;
+	top: 15vh;
+	font-size: 3vw;
+	transition: 1.5s ease-in-out;
+	background-color: rgba(255, 255, 255, 0);
+	border: none;
+}
+.closeButton:hover {
+	background-color: azure;
+	transform: scale(1.25);
+}
 .carousel {
 	display: flex;
 	flex-direction: row;
+	justify-content: first baseline;
 	gap: 5vw;
-	background-color: rgba(95, 158, 160, 0.863);
-	justify-content: space-around;
+	overflow-x: auto;
+	background-color: rgba(0, 0, 0, 0);
 	transition: 1.5s ease-in-out;
+	width: 90vw;
+}
+.tileBox {
+	width: 25vw;
+	padding-bottom: 2vh;
 }
 .tile {
 	display: flex;
@@ -176,9 +207,9 @@ color: whitesmoke;
 	gap: 2vh;
 	font-size: 1.75vw;
 	padding: 2vw;
-	background-color: rgb(255, 255, 255);
+	background-color: rgba(255, 255, 255, 0.897);
 	height: 55vh;
-	width: 25vw;
+	width: 22vw;
 	transition: 1.5s ease-in-out;
 }
 .mapContainer {
