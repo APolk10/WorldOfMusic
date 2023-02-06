@@ -1,11 +1,13 @@
 import * as React from 'react'
 import Analytics from './analytics';
+import { useState } from 'react';
 
 interface FunctionProps {
   onSearchChange(e: React.ChangeEvent<HTMLInputElement>):void;
 }
 
 const NavBar: React.FC<FunctionProps> = ({ onSearchChange }) => {
+  const[isOpen, setOpen] = useState(false);
   return (
     <div className='navbar'>
       <label className='searchFunctionLabelBox'>Find A Country
