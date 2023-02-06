@@ -13,6 +13,7 @@ const port = process.env.PORT;
 
 app.use(cors<Request>());
 app.use(express.json());
+// app.use(express.urlencoded({extended: true}));
 
 const url: string = 'https://musicbrainz.org/ws/2/';
 
@@ -22,6 +23,13 @@ app.get('/getCountryData/:country', (req: Request, res: Response) => {
     .then((response: { data: {} }) => res.status(200).send(response.data))
     .catch((error: Error) => console.log(error))
 })
+
+app.post('/trackClick', (req: Request, res: Response) => {
+  let country: string = req.body.country;
+  // once database is established update the counter table for the country provided
+  console.log('user clicked', country)
+})
+
 
 app.listen(port);
 console.log(`Server listening at http:/localhost:${port}`);

@@ -252,6 +252,7 @@ color: whitesmoke;
 }
 .mapContainer {
 	display: flex;
+	justify-content: center;
 	margin-top: 5vh;
 }
 .footer {
