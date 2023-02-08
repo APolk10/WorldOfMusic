@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
+import axios from 'axios';
 import CountryInfo from './components/countryInfo'
 import HexMap from './components/hexMap'
 import Map from './components/map'
@@ -24,6 +25,12 @@ const App: React.FC = () => {
     setCountryArtists(dataFromAPI.artists);
     setNameOfCountry(countryName);
   }
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/getGlobalAnalytics')
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }, [])
 
   return (
     <div className="container">

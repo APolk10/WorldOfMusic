@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Express, Request, Response } from 'express';
 import * as dotenv from 'dotenv';
 import * as cors from 'cors';
+import * as Controllers from './controllers/index'
 import db from '../database//index';
 
 const axios = require('axios').default;
@@ -24,10 +25,25 @@ app.get('/getCountryData/:country', (req: Request, res: Response) => {
     .catch((error: Error) => console.log(error))
 })
 
+app.get('/getGlobalAnalytics', (req: Request, res: Response) => {
+  Controllers.fetchGlobalAnalyticData();
+})
+
+app.post('/addFavorite', (req: Request, res: Response) => {
+  let countryToAdd: string = req.body.country;
+  let username: string = req.body.username;
+  // call controller to handle next steps
+  Controllers.addFavorite(countryToAdd, username);
+})
+
+app.post('/removeFavorite', (req: Request, res: Response) => {
+  let countryToRemove: string = req.body.country;
+  // call controller to handle next steps
+})
+
 app.post('/trackClick', (req: Request, res: Response) => {
-  let country: string = req.body.country;
-  // once database is established update the counter table for the country provided
-  console.log('user clicked', country)
+  let countryClicked: string = req.body.country;
+  // call controller to handle next steps
 })
 
 
