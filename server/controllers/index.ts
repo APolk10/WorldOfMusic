@@ -1,5 +1,6 @@
 import getGlobalAnalyticData from "../models/getGlobalAnalyticData";
-import getUserProfile from "../models/getUserProfile";
+import getUser from "../models/getUser";
+import getFavorites from "../models/getFavorites";
 import logFavorite from "../models/logFavorite";
 import removeFavorite from "../models/removeFavorite";
 import trackClick from "../models/trackClick";
@@ -8,8 +9,12 @@ export const fetchGlobalAnalyticData = () => {
   console.log('controller for fetchGlobalAnalyticData triggered');
 }
 
-export const fetchUserProfile = (user: string) => {
+export const fetchUser = (session_id: string) => {
   console.log('controller for fetchUserProfile triggered');
+}
+
+export const getAllFavorites = (user: string) => {
+  console.log('controller for get favorites for a user triggered');
 }
 
 export const addFavorite = (user: string, countryToAdd: string) => {

@@ -27,6 +27,7 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
+    // axios.get('http://localhost:3001').then((data) => console.log(data.data))
     axios.get('http://localhost:3001/getGlobalAnalytics')
       .then((data) => console.log(data))
       .catch((err) => console.log(err));

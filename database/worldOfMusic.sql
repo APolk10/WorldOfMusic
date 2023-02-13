@@ -10,18 +10,18 @@ CREATE TABLE countries
 CREATE TABLE favorites
 (
   id int PRIMARY KEY,
-  email varchar,
+  username varchar,
+  artist varchar,
   country varchar
 );
 
 CREATE TABLE users
 (
   id int,
-  username varchar,
-  email varchar PRIMARY KEY,
-  hash_string varchar,
-  token varchar,
-  created_on timestamp
+  username varchar UNIQUE,
+  session_id varchar PRIMARY KEY,
+  created_on timestamp,
+  visits int
 );
 
 -- seating the database can be done manually with these SQL queries.

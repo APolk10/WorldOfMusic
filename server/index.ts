@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { Express, Request, Response } from 'express';
+import * as cookieParser from 'cookie-parser';
 import * as dotenv from 'dotenv';
 import * as cors from 'cors';
 import * as Controllers from './controllers/index'
@@ -12,11 +13,17 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 
+app.use(cookieParser());
+
 app.use(cors<Request>());
 app.use(express.json());
-// app.use(express.urlencoded({extended: true}));
 
 const url: string = 'https://musicbrainz.org/ws/2/';
+
+app.get('/', (req: Request, res: Response) => {
+  console.log('Cookies', req.cookies)
+  res.cookie('name', 'express').send('cookie set');
+})
 
 app.get('/getCountryData/:country', (req: Request, res: Response) => {
   let isoCode: string = req.params.country;
@@ -26,7 +33,8 @@ app.get('/getCountryData/:country', (req: Request, res: Response) => {
 })
 
 app.get('/getGlobalAnalytics', (req: Request, res: Response) => {
-  Controllers.fetchGlobalAnalyticData();
+  console.log('getGlobalAnalytics')
+  // Controllers.fetchGlobalAnalyticData();
 })
 
 app.post('/addFavorite', (req: Request, res: Response) => {
