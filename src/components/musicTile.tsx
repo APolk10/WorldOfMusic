@@ -23,18 +23,18 @@ const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry }) => {
   return (
     <div className='tileBox'>
        <div className='tile'>
-        <p className='tileInfoHeader'>Country of Origin:
+        <div className='tileInfoHeader'>Country of Origin:
           <p className='tileInfoData'>{nameOfCountry}</p>
-        </p>
-        <p className='tileInfoHeader'>Full Name:
+        </div>
+        <div className='tileInfoHeader'>Full Name:
           <p className='tileInfoData'>{artist.name}</p>
-        </p>
-        <p className='tileInfoHeader'>Alternative Name:
+        </div>
+        <div className='tileInfoHeader'>Alternative Name:
           <p className='tileInfoData'>{artist.aliases ? artist.aliases[0].name : 'unknown'}</p>
-        </p>
-        <p className='tileInfoHeader'>Solo or Group:
+        </div>
+        <div className='tileInfoHeader'>Solo or Group:
           <p className='tileInfoData'>{artist.type === 'Person' ? 'solo' : 'group'}</p>
-        </p>
+        </div>
         <div className='buttonsDiv'>
           <button type='submit' className='spotifyButton' onClick={redirectToSpotify}>Find Their Music</button>
           <button className='addFavButton'>Favorite This</button>

@@ -44,7 +44,7 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry }) => 
     <div className='countryInfoContainer' id='countryInfoContainer'>
       { open === true ?
       <div className='carousel'>
-        { countryArtists.length ? countryArtists.map((artist) => <MusicTile artist={artist} nameOfCountry={nameOfCountry}/>) : <div className='placeholderText'>{header.text}</div>}
+        { countryArtists.length ? countryArtists.map((artist) => <MusicTile key={artist.name} artist={artist} nameOfCountry={nameOfCountry}/>) : <div className='placeholderText'>{header.text}</div>}
         <button className='closeButton' onClick={handleSideBarButtonPush}>X</button>
       </div> : <button className='openButton' type='button' onClick={handleSideBarButtonPush}>&rarr;</button>}
     </div>
