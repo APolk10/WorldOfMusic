@@ -15,7 +15,11 @@ interface TileProps {
 
 const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry }) => {
 
-  console.log(artist);
+  const redirectToSpotify = () => {
+    const link = `https://open.spotify.com/search/${artist.name}`
+    window.open(link, "_blank");
+  }
+
   return (
     <div className='tileBox'>
        <div className='tile'>
@@ -32,7 +36,7 @@ const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry }) => {
           <p className='tileInfoData'>{artist.type === 'Person' ? 'solo' : 'group'}</p>
         </p>
         <div className='buttonsDiv'>
-          <button className='spotifyButton'>Find Their Music</button>
+          <button type='submit' className='spotifyButton' onClick={redirectToSpotify}>Find Their Music</button>
           <button className='addFavButton'>Favorite This</button>
         </div>
        </div>
