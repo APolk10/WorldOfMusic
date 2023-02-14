@@ -201,22 +201,23 @@ color: whitesmoke;
 	padding: 1vw;
 	gap: 5vw;
 	overflow-x: auto;
+	overflow-y: hidden;
 	background-color: rgba(0, 0, 0, .1);
 	transition: 1.5s ease-in-out;
 	width: 90vw;
 }
 .tileBox {
 	width: 25vw;
+	padding: 2vw;
 }
 .tile {
 	display: flex;
-	justify-content: flex-start;
-	align-items: flex-start;
+	justify-content: space-between;
 	flex-direction: column;
 	padding-top: 1.5vw;
 	gap: 2vh;
 	font-size: 1.75vw;
-	padding: 2vw;
+	padding: 4vw;
 	background-color: rgba(255, 255, 255, 0.897);
 	height: 55vh;
 	width: 22vw;
@@ -233,10 +234,9 @@ color: whitesmoke;
 .buttonsDiv {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	justify-content: end;
 	margin-left: -1.5vw;
 	gap: 2vw;
-	margin-top: 19vh;
 	width: 25vw;
 }
 .spotifyButton, .addFavButton {
