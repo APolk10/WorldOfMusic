@@ -6,6 +6,8 @@ import * as cors from 'cors';
 import * as Controllers from './controllers/index'
 import db from '../database//index';
 
+const expressSession =require('express-session');
+const pgSession = require('connect-pg-simple')(expressSession);
 const axios = require('axios').default;
 
 dotenv.config();
@@ -13,7 +15,18 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 
-app.use(cookieParser());
+app.use(expressSession({
+  store: new pgSession({
+    pool : db,
+    tableName: "session",
+    // connect-pg-simple options
+  }),
+  secret: process.env.COOKIE_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 }
+  // express-session options
+}));
 
 app.use(cors<Request>());
 app.use(express.json());
@@ -22,9 +35,16 @@ const url: string = 'https://musicbrainz.org/ws/2/';
 
 app.get('/', (req: Request, res: Response) => {
   console.log('Cookies', req.cookies)
-  res.cookie('name', 'express').send('cookie set');
+  // the flow should be
+    // 1. Client Sends request to "/"
+    // 2. Server checks the cookies for the session id
+      // 2a. If session id, access database for session data -> return that data to populate the screen
+      // 2b. If not, ask user for username
+        // 2ba. set a session id with new user and create session in database
+    // 3. Proceed to website
 })
 
+/*     ROUTES     */
 app.get('/getCountryData/:country', (req: Request, res: Response) => {
   let isoCode: string = req.params.country;
   axios.get(`${url}artist/?query=country:${isoCode}`)
@@ -55,5 +75,6 @@ app.post('/trackClick', (req: Request, res: Response) => {
 })
 
 
+/* END ROUTES  */
 app.listen(port);
 console.log(`Server listening at http:/localhost:${port}`);

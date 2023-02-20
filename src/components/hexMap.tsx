@@ -30,11 +30,7 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
   }
 
   function randomizeColor() {
-    // 177 is the limit
-    // if (colors.length >= 177) {
-    //   counter + 1;
-    //   return colors[counter - 1];
-    // }
+    // 177 is the color threshold
     let randomColor: string = randomRGB();
     return randomColor;
   }

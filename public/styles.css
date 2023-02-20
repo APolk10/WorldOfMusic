@@ -52,6 +52,17 @@ table {
 .container {
 	height: 100vh;
 }
+.login {
+	display: flex;
+	flex-direction: column;
+	color: whitesmoke;
+	text-align: center;
+	gap: 2vh;
+	font-size: 1vw;
+	align-items: center;
+	justify-content: center;
+	margin-top: 10vh;
+}
 .title {
 	font-size: 8vw;
 	margin-left: 4vw;
