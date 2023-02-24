@@ -10,7 +10,9 @@ import Footer from './components/footer'
 import Login from './components/login'
 
 const App: React.FC = () => {
-  const[user, setUser] = useState('');
+  const[username, setUsername] = useState('');
+  const[invalidUsername, setInvalidUsername] = useState(false)
+  const[profile, setProfile] = useState({});
   const[mode, setMode] = useState('standard');
   const[countryArtists, setCountryArtists] = useState([]);
   const[nameOfCountry, setNameOfCountry] = useState('');
@@ -29,22 +31,42 @@ const App: React.FC = () => {
   }
 
   const checkUsername = (username: string) => {
-    console.log(username);
-    // axios post request for username/session creation.
+    axios.get(`http://localhost:3001/username/${username}`, { withCredentials: true })
+    .then((response) => {
+      let name = response.data;
+      if (name === 'taken') {
+        setInvalidUsername(true);
+      } else {
+        setInvalidUsername(false);
+        setUsername(name);
+      }
+    })
+    .catch((error) => console.log(error))
   }
 
+
   useEffect(() => {
-    axios.get('http://localhost:3001/')
-    // if no user is found via the cookie -> session interaction, prompt
-      .then((data) => console.log('express returns this from sessionData', data));
-    axios.get('http://localhost:3001/getGlobalAnalytics')
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    // check for cookie/session
+    axios.get('http://localhost:3001/', { withCredentials: true })
+      .then((response) => {
+        if (response.data === 'no name') {
+          console.log('returning noname', response.data);
+        } else {
+          console.log('returning session', response.data);
+          setProfile(response.data);
+          setInvalidUsername(false);
+        }
+    })
+      .catch((error) => console.log('error from server', error))
+    // get all metadata for site
+    // axios.get('http://localhost:3001/getGlobalAnalytics')
+    //   .then((response) => console.log(response))
+    //   .catch((error) => console.log(error));
   }, [])
 
   return (
     <>
-    { user ?
+    { username ?
       <div className="container">
         <NavBar onSearchChange={onSearchChange}/>
         <div>
@@ -57,8 +79,8 @@ const App: React.FC = () => {
           {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} />}
         </div>
         <Footer />
-      </div> : <Login checkUser={checkUsername}/>}
-  </>
+      </div> : <Login checkUser={checkUsername} flag={invalidUsername} /> }
+    </>
   )
 }
 

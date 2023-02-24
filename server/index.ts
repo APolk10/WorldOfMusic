@@ -1,50 +1,80 @@
 import * as express from 'express';
 import { Express, Request, Response } from 'express';
-import * as cookieParser from 'cookie-parser';
 import * as dotenv from 'dotenv';
 import * as cors from 'cors';
 import * as Controllers from './controllers/index'
 import db from '../database//index';
+import * as path from 'path';
 
 const expressSession =require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
 const axios = require('axios').default;
+// axios.default.withCredential = true;
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
+// app.use(express.static(path.join(__dirname, '../public')));
 
 app.use(expressSession({
   store: new pgSession({
     pool : db,
     tableName: "session",
-    // connect-pg-simple options
+    // other connect-pg-simple options
   }),
   secret: process.env.COOKIE_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 }
-  // express-session options
+  resave: false, // wont reset id on refresh
+  saveUninitialized: true, // won't create new sessionID's every load (for one user)
+  cookie: { maxAge: 1000 * 60 * 60 * 24 },
+  remembered: false
+  // other express-session options
 }));
 
-app.use(cors<Request>());
+app.use(cors<Request>(({
+  credentials: true,
+  origin: 'http://localhost:3000'  // it's my React host
+  })));
 app.use(express.json());
+
 
 const url: string = 'https://musicbrainz.org/ws/2/';
 
 app.get('/', (req: Request, res: Response) => {
-  console.log('Cookies', req.cookies)
-  // the flow should be
-    // 1. Client Sends request to "/"
-    // 2. Server checks the cookies for the session id
-      // 2a. If session id, access database for session data -> return that data to populate the screen
-      // 2b. If not, ask user for username
-        // 2ba. set a session id with new user and create session in database
-    // 3. Proceed to website
+  let session = req.session;
+  let session_id = req.sessionID;
+  console.log(session_id);
+  app.set('remembered', true);
+  // check to see if a user is associated with the session
+  Controllers.fetchUserData(session_id)
+  .then((response) => res.status(200).send(response))
+  .catch((error) => res.status(200).send('no name'))
 })
 
 /*     ROUTES     */
+app.get('/username/:username', (req: Request, res: Response) => {
+  let username: string = req.params.username;
+  let session_id: string = req.sessionID;
+  console.log('GET username route', username, session_id);
+  // call controller to create a user along with session details
+  Controllers.checkForUser(username)
+    .then(() => res.status(200).send('taken'))
+    .catch((error) => {
+      console.log(error);
+      Controllers.createUser(username, session_id)
+      .then(() => res.status(200).send('created'))
+      .catch(() => console.log('duplicate found'))
+    })
+})
+
+app.get('/profile/:username', (req: Request, res: Response) => {
+  let username = req.params.username;
+  let sid = req.session;
+  console.log('get profile has this session attached', req.session);
+  Controllers.fetchUserData(username)
+    .then((response) => console.log(response))
+})
+
 app.get('/getCountryData/:country', (req: Request, res: Response) => {
   let isoCode: string = req.params.country;
   axios.get(`${url}artist/?query=country:${isoCode}`)
