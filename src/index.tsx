@@ -12,7 +12,7 @@ import Login from './components/login'
 const App: React.FC = () => {
   const[username, setUsername] = useState('');
   const[invalidUsername, setInvalidUsername] = useState(false)
-  const[profile, setProfile] = useState({});
+  const[profile, setProfile] = useState('');
   const[mode, setMode] = useState('standard');
   const[countryArtists, setCountryArtists] = useState([]);
   const[nameOfCountry, setNameOfCountry] = useState('');
@@ -49,11 +49,9 @@ const App: React.FC = () => {
     // check for cookie/session
     axios.get('http://localhost:3001/', { withCredentials: true })
       .then((response) => {
-        if (response.data === 'no name') {
-          console.log('returning noname', response.data);
-        } else {
-          console.log('returning session', response.data);
-          setProfile(response.data);
+        console.log(response.data);
+        if (response.data !== 'no name') {
+          setUsername(response.data);
           setInvalidUsername(false);
         }
     })

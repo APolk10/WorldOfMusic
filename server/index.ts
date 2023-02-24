@@ -41,14 +41,13 @@ app.use(express.json());
 const url: string = 'https://musicbrainz.org/ws/2/';
 
 app.get('/', (req: Request, res: Response) => {
-  let session = req.session;
   let session_id = req.sessionID;
   console.log(session_id);
   app.set('remembered', true);
   // check to see if a user is associated with the session
   Controllers.fetchUserData(session_id)
-  .then((response) => res.status(200).send(response))
-  .catch((error) => res.status(200).send('no name'))
+  .then((response) => res.status(200).send(response.rows[0].username))
+  .catch((response) => res.status(200).send('no name'))
 })
 
 /*     ROUTES     */
@@ -58,12 +57,15 @@ app.get('/username/:username', (req: Request, res: Response) => {
   console.log('GET username route', username, session_id);
   // call controller to create a user along with session details
   Controllers.checkForUser(username)
-    .then(() => res.status(200).send('taken'))
-    .catch((error) => {
-      console.log(error);
-      Controllers.createUser(username, session_id)
-      .then(() => res.status(200).send('created'))
-      .catch(() => console.log('duplicate found'))
+    .then((response) => {
+      if (response.rows.length < 1) {
+        Controllers.createUser(username, session_id)
+        .then(() => res.status(201).send('user created'))
+        .catch((response) => console.log(response))
+        // .catch((response) => res.status(200).send('error creating user'))
+      } else {
+        res.status(200).send('taken')
+      }
     })
 })
 
