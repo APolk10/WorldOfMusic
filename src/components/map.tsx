@@ -30,7 +30,8 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
     });
 
     axios.post(`http://localhost:3001/trackClick`, {
-      country: countryName
+      country: countryName,
+      iso: countryISOCode
     })
     .then((res: { data: {} }) => {
       console.log(res.data);

@@ -1,7 +1,7 @@
 CREATE TABLE countries
 (
-  id int PRIMARY KEY,
-  country_name varchar,
+  id int,
+  country_name varchar PRIMARY KEY,
   iso_code varchar,
   color varchar,
   clicks int

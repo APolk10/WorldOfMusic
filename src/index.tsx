@@ -46,7 +46,7 @@ const App: React.FC = () => {
 
 
   useEffect(() => {
-    // check for cookie/session
+    // check for existing session
     axios.get('http://localhost:3001/', { withCredentials: true })
       .then((response) => {
         console.log(response.data);

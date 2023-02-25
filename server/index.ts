@@ -9,7 +9,6 @@ import * as path from 'path';
 const expressSession =require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
 const axios = require('axios').default;
-// axios.default.withCredential = true;
 
 dotenv.config();
 
@@ -33,16 +32,17 @@ app.use(expressSession({
 
 app.use(cors<Request>(({
   credentials: true,
-  origin: 'http://localhost:3000'  // it's my React host
+  origin: 'http://localhost:3000'
   })));
+
 app.use(express.json());
 
 
-const url: string = 'https://musicbrainz.org/ws/2/';
+const MB_url: string = 'https://musicbrainz.org/ws/2/';
 
+// Cookie/Session check
 app.get('/', (req: Request, res: Response) => {
   let session_id = req.sessionID;
-  console.log(session_id);
   app.set('remembered', true);
   // check to see if a user is associated with the session
   Controllers.fetchUserData(session_id)
@@ -54,15 +54,13 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/username/:username', (req: Request, res: Response) => {
   let username: string = req.params.username;
   let session_id: string = req.sessionID;
-  console.log('GET username route', username, session_id);
-  // call controller to create a user along with session details
+
   Controllers.checkForUser(username)
     .then((response) => {
       if (response.rows.length < 1) {
         Controllers.createUser(username, session_id)
         .then(() => res.status(201).send('user created'))
-        .catch((response) => console.log(response))
-        // .catch((response) => res.status(200).send('error creating user'))
+        .catch((response) => res.status(200).send('error creating user'))
       } else {
         res.status(200).send('taken')
       }
@@ -79,7 +77,7 @@ app.get('/profile/:username', (req: Request, res: Response) => {
 
 app.get('/getCountryData/:country', (req: Request, res: Response) => {
   let isoCode: string = req.params.country;
-  axios.get(`${url}artist/?query=country:${isoCode}`)
+  axios.get(`${MB_url}artist/?query=country:${isoCode}`)
     .then((response: { data: {} }) => res.status(200).send(response.data))
     .catch((error: Error) => console.log(error))
 })
@@ -103,6 +101,10 @@ app.post('/removeFavorite', (req: Request, res: Response) => {
 
 app.post('/trackClick', (req: Request, res: Response) => {
   let countryClicked: string = req.body.country;
+  let iso_code: string = req.body.iso;
+  Controllers.incrementClickData(countryClicked, iso_code)
+    .then((response) => res.status(200).send('click tracked'))
+    .catch((error) => console.log(error))
   // call controller to handle next steps
 })
 
@@ -110,3 +112,5 @@ app.post('/trackClick', (req: Request, res: Response) => {
 /* END ROUTES  */
 app.listen(port);
 console.log(`Server listening at http:/localhost:${port}`);
+
+module.exports = app;

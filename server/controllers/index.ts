@@ -34,6 +34,7 @@ export const deleteFavorite = (user: string, countryToRemove: string) => {
   console.log('controller for deleteFavorite triggered');
 }
 
-export const incrementClickData = (countryName: string) => {
+export const incrementClickData = (countryName: string, iso: string) => {
   console.log('controller for incrementClickData triggered');
+  return trackClick(countryName, iso);
 }
