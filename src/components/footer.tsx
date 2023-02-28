@@ -1,11 +1,11 @@
 import * as React from 'react';
-import * as axios from 'axios';
+import axios from 'axios';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  handleLogoutClick():void,
+}
+const Footer: React.FC<FooterProps> = ({ handleLogoutClick }) => {
 
-  const handleLogoutClick = () => {
-
-  }
   return (
     <div className="footer">
       <p>Footer</p>

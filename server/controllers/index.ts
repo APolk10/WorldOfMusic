@@ -6,6 +6,7 @@ import getFavorites from "../models/getFavorites";
 import logFavorite from "../models/logFavorite";
 import removeFavorite from "../models/removeFavorite";
 import trackClick from "../models/trackClick";
+import logoutAndInvalidateSession from "../models/logoutAndInvalidateSession";
 
 export const fetchGlobalAnalyticData = () => {
   console.log('controller for fetchGlobalAnalyticData triggered');
@@ -20,6 +21,11 @@ export const createUser = (username: string, session_id: string) => {
 export const fetchUserData = (session: any) => {
   // get data for a user based on their session id
   return getUserProfile(session);
+}
+
+export const invalidateSession = (username: string, expirationDate: string) => {
+  // after logout invalidate the session credentials to force a fresh login
+  return logoutAndInvalidateSession(username, expirationDate);
 }
 
 export const getAllFavorites = (user: string) => {

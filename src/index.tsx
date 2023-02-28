@@ -30,6 +30,14 @@ const App: React.FC = () => {
     setNameOfCountry(countryName);
   }
 
+  const handleLogoutClick = () => {
+    axios.post('http://localhost:3001/logout', { withCredentials: true })
+      .then(() => {
+        setUsername('')
+        setProfile('')
+      })
+  }
+
   const checkUsername = (username: string) => {
     axios.get(`http://localhost:3001/username/${username}`, { withCredentials: true })
     .then((response) => {
@@ -76,7 +84,7 @@ const App: React.FC = () => {
           <CountryInfo countryArtists={countryArtists} nameOfCountry={nameOfCountry} />
           {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} />}
         </div>
-        <Footer />
+        <Footer handleLogoutClick={handleLogoutClick}/>
       </div> : <Login checkUser={checkUsername} flag={invalidUsername} /> }
     </>
   )

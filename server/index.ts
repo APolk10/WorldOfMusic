@@ -5,6 +5,7 @@ import * as cors from 'cors';
 import * as Controllers from './controllers/index'
 import db from '../database//index';
 import * as path from 'path';
+import * as cookieParser from 'cookie-parser';
 
 const expressSession =require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
@@ -14,6 +15,7 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
+app.use(cookieParser())
 // app.use(express.static(path.join(__dirname, '../public')));
 
 app.use(expressSession({
@@ -25,8 +27,12 @@ app.use(expressSession({
   secret: process.env.COOKIE_SECRET,
   resave: false, // wont reset id on refresh
   saveUninitialized: true, // won't create new sessionID's every load (for one user)
-  cookie: { maxAge: 1000 * 60 * 60 * 24 },
-  remembered: false
+  cookie: {
+    name: 'wom',
+    maxAge: 1000 * 60 * 60 * 24 * 30,
+  },
+  remembered: false,
+  unset: 'destroy'
   // other express-session options
 }));
 
@@ -36,7 +42,6 @@ app.use(cors<Request>(({
   })));
 
 app.use(express.json());
-
 
 const MB_url: string = 'https://musicbrainz.org/ws/2/';
 
@@ -111,6 +116,16 @@ app.post('/trackClick', (req: Request, res: Response) => {
     .then((response) => res.status(200).send('click tracked'))
     .catch((error) => console.log(error))
   // call controller to handle next steps
+})
+
+app.post('/logout', (req: Request, res: Response) => {
+  let username = req.body.name;
+  req.session.cookie.expires = new Date(1970);
+  // update database session so that next fetch is outdated.
+  //Controllers.invalidateSession()
+  req.session.destroy(() => {
+    res.redirect('/');
+  })
 })
 
 

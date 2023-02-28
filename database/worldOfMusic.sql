@@ -19,7 +19,7 @@ CREATE TABLE users
 (
   id int,
   username varchar PRIMARY KEY,
-  pin int(4),
+  pin int,
   session_id varchar,
   created_on timestamp,
   visits int
@@ -39,3 +39,6 @@ ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFE
 CREATE INDEX "IDX_session_expire" ON "session" ("expire");
 
 -- seating the database can be done manually with these SQL queries.
+
+
+-- permissions update: GRANT ALL ON table_name TO role_name;

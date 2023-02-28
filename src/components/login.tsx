@@ -32,7 +32,7 @@ const Login: React.FC<loginProps> = ({ checkUser, flag }) => {
         <p>If you are an existing user, please provide your username and pin number.</p>
         <input type='input'></input>
         <input type='input'></input>
-        <button type='button'></button>
+        <button type='button'>Login</button>
       </div>
     </div>
   )
