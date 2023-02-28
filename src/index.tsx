@@ -57,9 +57,9 @@ const App: React.FC = () => {
     })
       .catch((error) => console.log('error from server', error))
     // get all metadata for site
-    // axios.get('http://localhost:3001/getGlobalAnalytics')
-    //   .then((response) => console.log(response))
-    //   .catch((error) => console.log(error));
+    axios.get('http://localhost:3001/getGlobalAnalytics')
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   }, [])
 
   return (

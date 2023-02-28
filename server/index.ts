@@ -67,6 +67,11 @@ app.get('/username/:username', (req: Request, res: Response) => {
     })
 })
 
+app.get('/login/:username/:pin', (req: Request, res: Response) => {
+  console.log(req.params);
+})
+
+
 app.get('/profile/:username', (req: Request, res: Response) => {
   let username = req.params.username;
   let sid = req.session;

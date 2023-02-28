@@ -18,8 +18,9 @@ CREATE TABLE favorites
 CREATE TABLE users
 (
   id int,
-  username varchar UNIQUE,
-  session_id varchar PRIMARY KEY,
+  username varchar PRIMARY KEY,
+  pin int(4),
+  session_id varchar,
   created_on timestamp,
   visits int
 );
