@@ -1,8 +1,10 @@
 import db from '../../database/index';
 
-const logoutAndInvalidateSession = function(username: string, expirationDate: string) {
-  // add a favorite to the favorites table with the artist + country + user
-  console.log('logFavorite activated');
+const logoutAndInvalidateSession = function(sessionID: string, username: string) {
+  // change the session date in table
+  console.log('logout activated', username, sessionID);
+  // return db.query(`UPDATE session SET expire = ${expirationDate} WHERE`)
+  return db.query(`UPDATE users SET session_id = 'removed' WHERE username = $1;`, [username]);
 
 }
 
