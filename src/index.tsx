@@ -31,15 +31,15 @@ const App: React.FC = () => {
   }
 
   const handleLogoutClick = () => {
-    axios.post('http://localhost:3001/logout', { withCredentials: true })
+    axios.post('http://localhost:3001/logout', { withCredentials: true, username: username })
       .then(() => {
         setUsername('')
         setProfile('')
       })
   }
 
-  const checkUsername = (username: string) => {
-    axios.get(`http://localhost:3001/username/${username}`, { withCredentials: true })
+  const checkUser = (username: string, pin: number) => {
+    axios.get(`http://localhost:3001/username/${username}/${pin}`, { withCredentials: true })
     .then((response) => {
       let name = response.data;
       if (name === 'taken') {
@@ -55,19 +55,25 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // check for existing session
-    axios.get('http://localhost:3001/', { withCredentials: true })
+    axios.get('http://localhost:3001/checkCredentials', { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        if (response.data !== 'no name') {
+        if (response.data === 'no name') {
+          console.log('no name found in database')
+        } else if (response.data !== 'unauthorized client') {
           setUsername(response.data);
+          setProfile(response.data);
           setInvalidUsername(false);
+        } else {
+          console.log('error checking credentials')
         }
+
     })
       .catch((error) => console.log('error from server', error))
     // get all metadata for site
-    axios.get('http://localhost:3001/getGlobalAnalytics')
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+    // axios.get('http://localhost:3001/getGlobalAnalytics', { withCredentials: true })
+    //   .then((response) => console.log(response))
+    //   .catch((error) => console.log(error));
   }, [])
 
   return (
@@ -85,7 +91,7 @@ const App: React.FC = () => {
           {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} />}
         </div>
         <Footer handleLogoutClick={handleLogoutClick}/>
-      </div> : <Login checkUser={checkUsername} flag={invalidUsername} /> }
+      </div> : <Login checkUserCredentials={checkUser} flag={invalidUsername} /> }
     </>
   )
 }

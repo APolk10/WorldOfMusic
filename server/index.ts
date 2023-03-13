@@ -5,59 +5,90 @@ import * as cors from 'cors';
 import * as Controllers from './controllers/index'
 import db from '../database//index';
 import * as path from 'path';
-import * as cookieParser from 'cookie-parser';
-
-const expressSession =require('express-session');
-const pgSession = require('connect-pg-simple')(expressSession);
 const axios = require('axios').default;
+const expressSession = require('express-session');
+const pgSession = require('connect-pg-simple')(expressSession);
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
-app.use(cookieParser())
-// app.use(express.static(path.join(__dirname, '../public')));
+
+app.use(express.json());
+app.use(cors<Request>(({
+  credentials: true,
+  methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+  origin: 'http://localhost:3000'
+  })));
+
+declare module 'express-session' {
+  interface SessionData {
+    authenticated: boolean
+  }
+}
 
 app.use(expressSession({
   store: new pgSession({
     pool : db,
     tableName: "session",
-    // other connect-pg-simple options
   }),
   secret: process.env.COOKIE_SECRET,
-  resave: false, // wont reset id on refresh
-  saveUninitialized: true, // won't create new sessionID's every load (for one user)
+  resave: false,
+  saveUninitialized: false,
   cookie: {
-    name: 'wom',
+    path: '/',
+    secure: false,
+    authenticated: false,
+    // sameSite: true,
     maxAge: 1000 * 60 * 60 * 24 * 30,
-  },
-  remembered: false,
-  unset: 'destroy'
-  // other express-session options
+  }
 }));
 
-app.use(cors<Request>(({
-  credentials: true,
-  origin: 'http://localhost:3000'
-  })));
 
-app.use(express.json());
+// app.use(express.static(path.join(__dirname, '../public')));
+
 
 const MB_url: string = 'https://musicbrainz.org/ws/2/';
 
-// Cookie/Session check
-app.get('/', (req: Request, res: Response) => {
-  let session_id = req.sessionID;
-  app.set('remembered', true);
-  // check to see if a user is associated with the session
-  Controllers.fetchUserData(session_id)
-  .then((response) => res.status(200).send(response.rows[0].username))
-  .catch((response) => res.status(200).send('no name'))
+/*     ROUTES     */
+
+app.get('/checkCredentials', (req: Request, res: Response) => {
+  // if cookie - check it - if not, ask for credentials
+  let { sessionID } = req;
+
+  if (req.cookies) {
+    // if the cookie is found, find user data and return if found
+    Controllers.fetchUserData(sessionID)
+    .then((response) => res.status(200).send(response.rows[0].username))
+    .catch((response) => res.status(200).send('no name found'))
+  } else {
+    // if unauthorized/no cookie, return error
+    res.status(403).send('unauthorized client')
+  }
 })
 
-/*     ROUTES     */
-app.get('/username/:username', (req: Request, res: Response) => {
+// log a user in with their credentials
+app.post('/login', (req: Request, res: Response) => {
+  const { username, pin } = req.body;
+  if (username && pin) {
+    // create and store user, modify session, respond
+    // check for existing user, and respond accordingly
+    req.session.authenticated = true;
+    res.json({ msg: 'username and pin saved' });
+
+  } else if (username && !pin) {
+    res.json({ msg: 'no pin' })
+  } else if (!username && pin) {
+    res.json({ msg: 'no username' })
+  } else if (!username && !pin) {
+    res.json({ msg: 'no credentials provided' })
+  }
+
+})
+
+app.get('/username/:username/:pin', (req: Request, res: Response) => {
   let username: string = req.params.username;
+  let pin: number = parseInt(req.params.pin);
   let session_id: string = req.sessionID;
 
   Controllers.checkForUser(username)
@@ -70,10 +101,6 @@ app.get('/username/:username', (req: Request, res: Response) => {
         res.status(200).send('taken')
       }
     })
-})
-
-app.get('/login/:username/:pin', (req: Request, res: Response) => {
-  console.log(req.params);
 })
 
 
@@ -119,17 +146,37 @@ app.post('/trackClick', (req: Request, res: Response) => {
 })
 
 app.post('/logout', (req: Request, res: Response) => {
-  let username = req.body.name;
-  req.session.cookie.expires = new Date(1970);
+  let username = req.body.username;
+  let session = req.sessionID;
+  // req.session.cookie.expires = new Date(1970);
   // update database session so that next fetch is outdated.
-  //Controllers.invalidateSession()
+
+  console.log(req.session)
+  // res.cookie('connect.sid', '', {
+  //   path: '/',
+  //   domain: 'localhost',
+  //   httpOnly: true,
+  //   secure: false,
+  //   sameSite: false,
+  //   expires: new Date(1970),
+  // });
+
   req.session.destroy(() => {
-    res.redirect('/');
+    res.clearCookie('connect.sid', {
+      path: '/',
+      domain: '/',
+      secure: false,
+      sameSite: false,
+      expires: new Date(1970)
+    });
+    return res.redirect('/');
   })
+
 })
 
 
 /* END ROUTES  */
+
 app.listen(port);
 console.log(`Server listening at http:/localhost:${port}`);
 
