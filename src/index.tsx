@@ -31,15 +31,17 @@ const App: React.FC = () => {
   }
 
   const handleLogoutClick = () => {
-    axios.post('http://localhost:3001/logout', { withCredentials: true, username: username })
+    let currentURL = window.location.pathname;
+    axios.post('http://localhost:3001/logout', { username: username }, { withCredentials: true })
       .then(() => {
         setUsername('')
         setProfile('')
+        window.location.href = currentURL
       })
   }
 
   const checkUser = (username: string, pin: number) => {
-    axios.get(`http://localhost:3001/username/${username}/${pin}`, { withCredentials: true })
+    axios.post(`http://localhost:3001/login`,{ username: username, pin: pin }, { withCredentials: true })
     .then((response) => {
       let name = response.data;
       if (name === 'taken') {
@@ -58,7 +60,7 @@ const App: React.FC = () => {
     axios.get('http://localhost:3001/checkCredentials', { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        if (response.data === 'no name') {
+        if (response.data === 'no name found') {
           console.log('no name found in database')
         } else if (response.data !== 'unauthorized client') {
           setUsername(response.data);

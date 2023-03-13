@@ -56,7 +56,7 @@ app.get('/checkCredentials', (req: Request, res: Response) => {
   // if cookie - check it - if not, ask for credentials
   let { sessionID } = req;
 
-  if (req.cookies) {
+  if (req.sessionID) {
     // if the cookie is found, find user data and return if found
     Controllers.fetchUserData(sessionID)
     .then((response) => res.status(200).send(response.rows[0].username))
@@ -70,12 +70,24 @@ app.get('/checkCredentials', (req: Request, res: Response) => {
 // log a user in with their credentials
 app.post('/login', (req: Request, res: Response) => {
   const { username, pin } = req.body;
-  if (username && pin) {
-    // create and store user, modify session, respond
-    // check for existing user, and respond accordingly
-    req.session.authenticated = true;
-    res.json({ msg: 'username and pin saved' });
+  const session_id: string = req.sessionID;
 
+  console.log('/login', req.body)
+
+  if (username && pin) {
+    // checks for credentials and handles invalid input
+    Controllers.checkForUser(username)
+    .then((response) => {
+      if (response.rows.length < 1) {
+        Controllers.createUser(username, session_id)
+        .then(() => {
+          req.session.authenticated = true;
+          res.status(201).send('user created, pin saved')})
+        .catch(() => res.status(403).send('error creating user'))
+      } else {
+        res.status(403).send('taken')
+      }
+    })
   } else if (username && !pin) {
     res.json({ msg: 'no pin' })
   } else if (!username && pin) {
@@ -84,23 +96,6 @@ app.post('/login', (req: Request, res: Response) => {
     res.json({ msg: 'no credentials provided' })
   }
 
-})
-
-app.get('/username/:username/:pin', (req: Request, res: Response) => {
-  let username: string = req.params.username;
-  let pin: number = parseInt(req.params.pin);
-  let session_id: string = req.sessionID;
-
-  Controllers.checkForUser(username)
-    .then((response) => {
-      if (response.rows.length < 1) {
-        Controllers.createUser(username, session_id)
-        .then(() => res.status(201).send('user created'))
-        .catch((response) => res.status(200).send('error creating user'))
-      } else {
-        res.status(200).send('taken')
-      }
-    })
 })
 
 
@@ -169,7 +164,7 @@ app.post('/logout', (req: Request, res: Response) => {
       sameSite: false,
       expires: new Date(1970)
     });
-    return res.redirect('/');
+    res.status(200).send('user logged out');
   })
 
 })
