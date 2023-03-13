@@ -60,7 +60,7 @@ app.get('/checkCredentials', (req: Request, res: Response) => {
     // if the cookie is found, find user data and return if found
     Controllers.fetchUserData(sessionID)
     .then((response) => res.status(200).send(response.rows[0].username))
-    .catch((response) => res.status(200).send('no name found'))
+    .catch(() => res.status(200).send('no name found'))
   } else {
     // if unauthorized/no cookie, return error
     res.status(403).send('unauthorized client')
@@ -79,7 +79,7 @@ app.post('/login', (req: Request, res: Response) => {
     Controllers.checkForUser(username)
     .then((response) => {
       if (response.rows.length < 1) {
-        Controllers.createUser(username, session_id)
+        Controllers.createUser(username, pin, session_id)
         .then(() => {
           req.session.authenticated = true;
           res.status(201).send('user created, pin saved')})
@@ -141,20 +141,6 @@ app.post('/trackClick', (req: Request, res: Response) => {
 })
 
 app.post('/logout', (req: Request, res: Response) => {
-  let username = req.body.username;
-  let session = req.sessionID;
-  // req.session.cookie.expires = new Date(1970);
-  // update database session so that next fetch is outdated.
-
-  console.log(req.session)
-  // res.cookie('connect.sid', '', {
-  //   path: '/',
-  //   domain: 'localhost',
-  //   httpOnly: true,
-  //   secure: false,
-  //   sameSite: false,
-  //   expires: new Date(1970),
-  // });
 
   req.session.destroy(() => {
     res.clearCookie('connect.sid', {
