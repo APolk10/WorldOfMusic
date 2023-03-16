@@ -73,8 +73,6 @@ app.post('/newUserLogin', (req: Request, res: Response) => {
   const { username, pin } = req.body;
   const session_id: string = req.sessionID;
 
-  console.log('/newUser', req.body)
-
   if (username && pin) {
     // checks for credentials and handles invalid input
     Controllers.checkForUser(username, pin)
@@ -88,7 +86,6 @@ app.post('/newUserLogin', (req: Request, res: Response) => {
       } else {
         // allow existing user to login - send username and pin and if matching, return user, if not assume taken or incorrect credentials
         req.session.authenticated = false;
-        console.log(response.rows);
         res.status(403).send('taken')
       }
     })
@@ -106,17 +103,14 @@ app.post('/existingUserLogin', (req: Request, res: Response) => {
   const { username, pin } = req.body;
   const session_id: string = req.sessionID;
 
-  console.log('/existingUser', req.body)
-
   if (username && pin) {
     // checks for credentials and handles invalid input, updates sessionID if needed
     Controllers.checkForUser(username, pin, session_id)
     .then((response) => {
-      console.log('database response', response.rows)
       req.session.authenticated = true;
       res.status(200).send(response.rows)
   })
-    .catch((error) => console.log(error))
+    .catch((error) => res.send(error))
     }
 })
 
