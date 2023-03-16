@@ -2,20 +2,21 @@ import * as React from 'react';
 import { useState } from 'react';
 
 interface loginProps {
-  checkUserCredentials(username: string, int: number):void,
+  checkUser(username: string, pin: number):void,
+  createUser(username: string, pin: number):void,
   flag: boolean;
 }
 
-const Login: React.FC<loginProps> = ({ checkUserCredentials, flag }) => {
+const Login: React.FC<loginProps> = ({ checkUser, createUser, flag }) => {
   const[username, setUsername] = useState('');
   const[newUser, setNewUser] = useState(0);
   const[pin, setPin] = useState('');
 
   const handleNewUserClick = () => {
-    setNewUser(1);
+    setNewUser(2);
   }
   const handleExistingUserClick = () => {
-    setNewUser(2);
+    setNewUser(1);
   }
 
   const handleUsernameInput = (e: React.ChangeEvent<HTMLInputElement>):void  => {
@@ -26,34 +27,40 @@ const Login: React.FC<loginProps> = ({ checkUserCredentials, flag }) => {
     setPin(e.target.value)
   }
 
-  const handleSubmit = () => {
-    checkUserCredentials(username, parseInt(pin));
+  const handleCheckUserSubmit = () => {
+    if (username && pin) {
+      checkUser(username, parseInt(pin));
+    }
+  }
+  const handleCreateUserSubmit = () => {
+    if (username && pin) {
+      createUser(username, parseInt(pin))
+    }
   }
 
   const renderLogin = () => {
       if (newUser === 0) {
         return <></>
       }
-
       if (newUser === 1) {
         return (
-          <div>
-            <p>Please enter your username and pin number.</p>
+          <div className='login'>
+            <p className='loginText'>Please enter your username and pin number.</p>
             <input type='input' onChange={handleUsernameInput} placeholder={'USERNAME'}></input>
             { flag ? <p className='loginError'>This username is taken</p> : <></>}
             <input type='input' onChange={handlePinInput} placeholder={'PIN'}></input>
-            <button type='button' onClick={handleSubmit}>Submit</button>
+            <button type='button' onClick={handleCheckUserSubmit}>Submit</button>
           </div>
         )
       }
       if (newUser === 2) {
         return (
-          <div>
-            <p>If this is your first time, please provide a unique username and memorable pin number.</p>
+          <div className='login'>
+            <p className='loginText'>If this is your first time, please provide a unique username and memorable pin number.</p>
             <input type='input' onChange={handleUsernameInput} placeholder={'USERNAME'}></input>
             { flag ? <p className='loginError'>This username is taken</p> : <></>}
             <input type='input' onChange={handlePinInput} placeholder={'PIN'}></input>
-            <button type='button' onClick={handleSubmit}>Submit</button>
+            <button type='button' onClick={handleCreateUserSubmit}>Submit</button>
           </div>
         )
       }
@@ -61,8 +68,10 @@ const Login: React.FC<loginProps> = ({ checkUserCredentials, flag }) => {
 
   return (
     <div className='login'>
-      <button type='button' onClick={handleNewUserClick}>New User</button>
-      <button type='button' onClick={handleExistingUserClick}>Existing User</button>
+      <div className='userSelection'>
+        <button className='userButtons'type='button' onClick={handleNewUserClick}>New User</button>
+        <button className='userButtons' type='button' onClick={handleExistingUserClick}>Existing User</button>
+      </div>
       <>
         {renderLogin()}
       </>

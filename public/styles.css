@@ -61,7 +61,22 @@ table {
 	font-size: 1vw;
 	align-items: center;
 	justify-content: center;
-	margin-top: 10vh;
+	margin-top: 5vh;
+}
+.loginText {
+	font-size: 2vw;
+}
+.userSelection {
+	display: flex;
+	flex-direction: row;
+	gap: 10vw;
+}
+.userButtons {
+	width: 15vw;
+	height: 5vh;
+}
+.userButtons:focus {
+	background-color: pink;
 }
 .title {
 	font-size: 8vw;

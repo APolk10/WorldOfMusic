@@ -56,11 +56,12 @@ app.get('/checkCredentials', (req: Request, res: Response) => {
   // if cookie - check it - if not, ask for credentials
   let { sessionID } = req;
 
+  console.log('check credentials', sessionID);
   if (req.sessionID) {
     // if the cookie is found, find user data and return if found
     Controllers.fetchUserData(sessionID)
-    .then((response) => res.status(200).send(response.rows[0].username))
-    .catch(() => res.status(200).send('no name found'))
+    .then((response) => {console.log(response.rows); res.status(200).send(response.rows[0].username); })
+    .catch((response) => res.status(200).send('no name found'))
   } else {
     // if unauthorized/no cookie, return error
     res.status(403).send('unauthorized client')
@@ -68,15 +69,15 @@ app.get('/checkCredentials', (req: Request, res: Response) => {
 })
 
 // log a user in with their credentials
-app.post('/login', (req: Request, res: Response) => {
+app.post('/newUserLogin', (req: Request, res: Response) => {
   const { username, pin } = req.body;
   const session_id: string = req.sessionID;
 
-  console.log('/login', req.body)
+  console.log('/newUser', req.body)
 
   if (username && pin) {
     // checks for credentials and handles invalid input
-    Controllers.checkForUser(username)
+    Controllers.checkForUser(username, pin)
     .then((response) => {
       if (response.rows.length < 1) {
         Controllers.createUser(username, pin, session_id)
@@ -85,6 +86,9 @@ app.post('/login', (req: Request, res: Response) => {
           res.status(201).send('user created, pin saved')})
         .catch(() => res.status(403).send('error creating user'))
       } else {
+        // allow existing user to login - send username and pin and if matching, return user, if not assume taken or incorrect credentials
+        req.session.authenticated = false;
+        console.log(response.rows);
         res.status(403).send('taken')
       }
     })
@@ -96,6 +100,24 @@ app.post('/login', (req: Request, res: Response) => {
     res.json({ msg: 'no credentials provided' })
   }
 
+})
+
+app.post('/existingUserLogin', (req: Request, res: Response) => {
+  const { username, pin } = req.body;
+  const session_id: string = req.sessionID;
+
+  console.log('/existingUser', req.body)
+
+  if (username && pin) {
+    // checks for credentials and handles invalid input, updates sessionID if needed
+    Controllers.checkForUser(username, pin, session_id)
+    .then((response) => {
+      console.log('database response', response.rows)
+      req.session.authenticated = true;
+      res.status(200).send(response.rows)
+  })
+    .catch((error) => console.log(error))
+    }
 })
 
 
@@ -154,7 +176,6 @@ app.post('/logout', (req: Request, res: Response) => {
   })
 
 })
-
 
 /* END ROUTES  */
 

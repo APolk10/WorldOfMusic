@@ -10,8 +10,8 @@ import trackClick from "../models/trackClick";
 export const fetchGlobalAnalyticData = () => {
   console.log('controller for fetchGlobalAnalyticData triggered');
 }
-export const checkForUser = (username: string) => {
-  return checkUser(username);
+export const checkForUser = (username: string, pin: number, session_id?: string) => {
+  return checkUser(username, pin, session_id);
 }
 export const createUser = (username: string, pin: number, session_id: string) => {
   // create a user with given username mixed with session data

@@ -41,7 +41,7 @@ const App: React.FC = () => {
   }
 
   const checkUser = (username: string, pin: number) => {
-    axios.post(`http://localhost:3001/login`,{ username: username, pin: pin }, { withCredentials: true })
+    axios.post(`http://localhost:3001/existingUserLogin`,{ username: username, pin: pin }, { withCredentials: true })
     .then((response) => {
       let name = response.data;
       if (name === 'taken') {
@@ -52,6 +52,16 @@ const App: React.FC = () => {
       }
     })
     .catch((error) => console.log(error))
+  }
+
+  const createUser = (username: string, pin: number) => {
+    axios.post('http://localhost:3001/newUserLogin', { username: username, pin: pin }, { withCredentials: true })
+      .then((response) => {
+
+      })
+      .catch((reponse) => {
+
+      })
   }
 
 
@@ -93,7 +103,7 @@ const App: React.FC = () => {
           {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} />}
         </div>
         <Footer handleLogoutClick={handleLogoutClick}/>
-      </div> : <Login checkUserCredentials={checkUser} flag={invalidUsername} /> }
+      </div> : <Login checkUser={checkUser} createUser={createUser} flag={invalidUsername} /> }
     </>
   )
 }
