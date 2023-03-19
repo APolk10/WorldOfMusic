@@ -39,7 +39,6 @@ app.use(expressSession({
     path: '/',
     secure: false,
     authenticated: false,
-    // sameSite: true,
     maxAge: 1000 * 60 * 60 * 24 * 30,
   }
 }));
@@ -52,59 +51,56 @@ const MB_url: string = 'https://musicbrainz.org/ws/2/';
 
 /*     ROUTES     */
 
+// check a client for ID to retrieve a user via session
 app.get('/checkCredentials', (req: Request, res: Response) => {
-  // if cookie - check it - if not, ask for credentials
   let { sessionID } = req;
 
-  console.log('check credentials', sessionID);
   if (req.sessionID) {
-    // if the cookie is found, find user data and return if found
     Controllers.fetchUserData(sessionID)
-    .then((response) => {console.log(response.rows); res.status(200).send(response.rows[0].username); })
+    .then((response) => res.status(200).send(response.rows[0].username))
     .catch((response) => res.status(200).send('no name found'))
   } else {
-    // if unauthorized/no cookie, return error
     res.status(403).send('unauthorized client')
   }
 })
 
-// log a user in with their credentials
+// create a new user and session
 app.post('/newUserLogin', (req: Request, res: Response) => {
   const { username, pin } = req.body;
   const session_id: string = req.sessionID;
 
   if (username && pin) {
-    // checks for credentials and handles invalid input
+    // checks for availability of name, and creates the user if possible
     Controllers.checkForUser(username, pin)
     .then((response) => {
       if (response.rows.length < 1) {
         Controllers.createUser(username, pin, session_id)
         .then(() => {
           req.session.authenticated = true;
-          res.status(201).send('user created, pin saved')})
+          res.status(201).send( { msg: 'user created, pin saved', username: username })
+        })
         .catch(() => res.status(403).send('error creating user'))
       } else {
-        // allow existing user to login - send username and pin and if matching, return user, if not assume taken or incorrect credentials
         req.session.authenticated = false;
         res.status(403).send('taken')
       }
     })
   } else if (username && !pin) {
-    res.json({ msg: 'no pin' })
+    res.json({ msg: 'no pin provided' })
   } else if (!username && pin) {
-    res.json({ msg: 'no username' })
+    res.json({ msg: 'no username provided' })
   } else if (!username && !pin) {
     res.json({ msg: 'no credentials provided' })
   }
 
 })
 
+// retrieve a user based on username + pin submission
 app.post('/existingUserLogin', (req: Request, res: Response) => {
   const { username, pin } = req.body;
   const session_id: string = req.sessionID;
 
   if (username && pin) {
-    // checks for credentials and handles invalid input, updates sessionID if needed
     Controllers.checkForUser(username, pin, session_id)
     .then((response) => {
       req.session.authenticated = true;
@@ -114,11 +110,9 @@ app.post('/existingUserLogin', (req: Request, res: Response) => {
     }
 })
 
-
 app.get('/profile/:username', (req: Request, res: Response) => {
   let username = req.params.username;
   let sid = req.session;
-  console.log('get profile has this session attached', req.session);
   Controllers.fetchUserData(username)
     .then((response) => console.log(response))
 })
@@ -131,7 +125,6 @@ app.get('/getCountryData/:country', (req: Request, res: Response) => {
 })
 
 app.get('/getGlobalAnalytics', (req: Request, res: Response) => {
-  console.log('getGlobalAnalytics')
   // Controllers.fetchGlobalAnalyticData();
 })
 
@@ -174,6 +167,6 @@ app.post('/logout', (req: Request, res: Response) => {
 /* END ROUTES  */
 
 app.listen(port);
+
 console.log(`Server listening at http:/localhost:${port}`);
 
-module.exports = app;

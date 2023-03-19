@@ -57,10 +57,16 @@ const App: React.FC = () => {
   const createUser = (username: string, pin: number) => {
     axios.post('http://localhost:3001/newUserLogin', { username: username, pin: pin }, { withCredentials: true })
       .then((response) => {
-
+        // assumes returned username
+        if (response) {
+          const user = response.data.username;
+          setInvalidUsername(false);
+          setUsername(user);
+        }
       })
       .catch((reponse) => {
-
+        // assumes username is taken
+        console.log('error creating user');
       })
   }
 
@@ -69,7 +75,6 @@ const App: React.FC = () => {
     // check for existing session
     axios.get('http://localhost:3001/checkCredentials', { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
         if (response.data === 'no name found') {
           console.log('no name found in database')
         } else if (response.data !== 'unauthorized client') {
