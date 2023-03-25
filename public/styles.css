@@ -90,7 +90,7 @@ table {
 	gap: 2vw;
 	margin-left: 12vw;
 }
-.mode-button {
+.mode-button, .logoutButton {
 	background-color: rgba(0, 0, 0, 0.531);
 	border: none;
 	color: white;
@@ -98,30 +98,34 @@ table {
 	width: 16vw;
 	height: 6vh;
 }
-.mode-button:hover {
+.mode-button:hover, .logoutButton:hover {
 	background-color: rgba(148, 148, 39, 0.787);
 	cursor: pointer;
 	cursor:text hello;
 }
 .navbar {
 	display: flex;
-	background-color: rgba(126, 126, 126, .5);
 	justify-content: space-around;
 	align-items: flex-start;
 	position: fixed;
 	border: white 2px solid;
+	background-color: rgba(126, 126, 126, .5);
 	color: white;
 	font-size: 2vw;
-	margin-top: -2vh;
-	padding-top: 1.5vh;
-	margin-left: 60vw;
+	margin-top: -1vh;
+	padding-top: 2vh;
+	margin-left: 57vw;
 	z-index: 15;
-	width: 35vw;
+	width: 41vw;
 	height: 10vh;
+	transition: 1.25s ease-in-out;
 }
-.navbar:hover {
-	background-color: rgba(126, 126, 126, .8);
+#navbar {
+
 }
+/* #navbar:hover {
+	background-color: rgba(126, 126, 126, .9);
+} */
 .searchFunctionLabelBox {
 	display: flex;
 	gap: 1vh;
@@ -149,6 +153,13 @@ table {
 background-color: black;
 color: whitesmoke;
 }
+
+@keyframes flashSideBar {
+	50% {
+		background-color: red;
+	}
+}
+
 .countryInfoContainer, .countryInfoContainerToggle {
 	display: flex;
 	flex-direction: column;
@@ -162,15 +173,16 @@ color: whitesmoke;
 	border-bottom-right-radius: 25%;
 	height: 76vh;
 	width: 4vw;
-	transition: 1s ease-in-out;
+	min-width: 40px;
+	transition: .75s ease-in-out;
+	animation: none;
 }
 #countryInfoContainerToggle {
 	border-top-right-radius: 0%;
 	border-bottom-right-radius: 0%;
 	background-color: rgba(95, 158, 160, 0.863);
-	margin-left: 2vw;
 	height: 80vh;
-	width: 95.5vw;
+	width: 100vw;
 	overflow-x: hidden;
 	transition: 1.5s ease-in-out;
 }
@@ -179,7 +191,7 @@ color: whitesmoke;
 	justify-content: center;
 	align-items: center;
 	background-color: rgba(255, 255, 255, 0);
-	width: 80vw;
+	width: 100vw;
 	height: 50vh;
 	font-size: 4vw;
 }
@@ -205,7 +217,7 @@ color: whitesmoke;
 	background-color: rgba(255, 255, 255, 0);
 }
 .openButton:hover {
-	transform: scale(1.5);
+	transform: scale(1.25);
 }
 .closeButton {
 	position: fixed;
@@ -224,13 +236,12 @@ color: whitesmoke;
 	display: flex;
 	flex-direction: row;
 	justify-content: first baseline;
-	padding: 1vw;
-	gap: 5vw;
+	gap: 3vw;
 	overflow-x: auto;
 	overflow-y: hidden;
 	background-color: rgba(0, 0, 0, .1);
 	transition: 1.5s ease-in-out;
-	width: 90vw;
+	width: 100vw;
 }
 .tileBox {
 	width: 25vw;
@@ -245,9 +256,9 @@ color: whitesmoke;
 	font-size: 1.75vw;
 	padding: 4vw;
 	background-color: rgba(255, 255, 255, 0.897);
-	height: 55vh;
-	width: 22vw;
-	transition: 1.5s ease-in-out;
+	height: 50vh;
+	width: 20vw;
+	/* transition: 1.5s ease-in-out; */
 }
 .tileInfoHeader {
 	font-size: 1.75vw;
@@ -260,10 +271,9 @@ color: whitesmoke;
 .buttonsDiv {
 	display: flex;
 	flex-direction: row;
-	justify-content: end;
-	margin-left: -1.5vw;
+	justify-content: center;
 	gap: 2vw;
-	width: 25vw;
+	width: 20vw;
 }
 .spotifyButton, .addFavButton {
 	width: 11.5vw;

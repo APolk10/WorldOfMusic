@@ -8,8 +8,7 @@ const Footer: React.FC<FooterProps> = ({ handleLogoutClick }) => {
 
   return (
     <div className="footer">
-      <p>Footer</p>
-      <button type='button' onClick={handleLogoutClick}>Logout</button>
+      <button className='logoutButton' type='button' onClick={handleLogoutClick}>Logout</button>
     </div>
   )
 }

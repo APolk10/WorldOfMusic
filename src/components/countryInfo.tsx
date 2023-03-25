@@ -26,6 +26,7 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry }) => 
 
   const openSideBar = () => {
     document.getElementById('countryInfoContainer')!.id = 'countryInfoContainerToggle';
+    document.getElementById('countryInfoContainerToggle')!.style.animation = 'none';
     setOpen(true);
   }
 

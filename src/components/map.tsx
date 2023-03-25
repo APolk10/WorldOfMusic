@@ -8,6 +8,8 @@ interface mapProps {
   handleCountrySelection({}, name: string):void;
 }
 
+const animation = 'flashSideBar 1s linear infinite';
+
 const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
   const[countries, setCountries] = useState(mapOverlay);
   const[countryClicked, setClicked] = useState();
@@ -27,6 +29,8 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
     .then((res: { data: {} }) => {
       setCountry(res.data)
       handleCountrySelection(res.data, countryName)
+      document.getElementById('countryInfoContainer')!.style.animation = animation;
+      document.getElementById('countryInfoContainerToggle')!.style.animation = animation;
     });
 
     axios.post(`http://localhost:3001/trackClick`, {

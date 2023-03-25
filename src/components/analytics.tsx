@@ -1,8 +1,17 @@
-import * as React from 'react'
+import * as React from 'react';
+import { useState } from 'react';
 
-const Analytics: React.FC = () => {
+interface AnalyticsProps {
+  countryClickData: any[]
+}
+
+const Analytics: React.FC<AnalyticsProps> = () => {
+  const[isActive, setActive] = useState(false);
+
   return (
-    <div className='analyticsBar'>Analytics</div>
+    <div className='analyticsBar'>
+      { isActive ? <p className='inactiveAnalytics'>Analytics</p> : <p className='activeAnalytics'>Analytics</p>}
+    </div>
   )
 }
 

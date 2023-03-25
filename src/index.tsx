@@ -102,7 +102,7 @@ const App: React.FC = () => {
           <h1 className='title'>World of Music</h1>
           <div className='mode-buttons'>
             <button className='mode-button' onClick={handleModeButtonClick} value="solid">Mono Color with Borders</button>
-            <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hex Patter with Random Colors!</button>
+            <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hex Pattern with Random Colors!</button>
           </div>
           <CountryInfo countryArtists={countryArtists} nameOfCountry={nameOfCountry} />
           {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} />}
