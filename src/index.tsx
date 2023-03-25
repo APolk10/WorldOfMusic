@@ -5,7 +5,7 @@ import axios from 'axios';
 import CountryInfo from './components/countryInfo'
 import HexMap from './components/hexMap'
 import Map from './components/map'
-import NavBar from './components/navBar'
+import NavBar from './components/navbar'
 import Footer from './components/footer'
 import Login from './components/login'
 
