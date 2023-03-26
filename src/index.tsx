@@ -16,6 +16,7 @@ const App: React.FC = () => {
   const[mode, setMode] = useState('standard');
   const[countryArtists, setCountryArtists] = useState([]);
   const[nameOfCountry, setNameOfCountry] = useState('');
+  const[metadata, setMetadata] = useState([]);
 
   const handleModeButtonClick = (e: any):void => {
     setMode(e.target.value);
@@ -70,13 +71,12 @@ const App: React.FC = () => {
       })
   }
 
-
   useEffect(() => {
     // check for existing session
     axios.get('http://localhost:3001/checkCredentials', { withCredentials: true })
       .then((response) => {
         if (response.data === 'no name found') {
-          console.log('no name found in database')
+          console.log('no name found in database');
         } else if (response.data !== 'unauthorized client') {
           setUsername(response.data);
           setProfile(response.data);
@@ -84,20 +84,19 @@ const App: React.FC = () => {
         } else {
           console.log('error checking credentials')
         }
-
     })
       .catch((error) => console.log('error from server', error))
-    // get all metadata for site
-    // axios.get('http://localhost:3001/getGlobalAnalytics', { withCredentials: true })
-    //   .then((response) => console.log(response))
-    //   .catch((error) => console.log(error));
+
+    axios.get('http://localhost:3001/getGlobalAnalytics', { withCredentials: true })
+      .then((response) => setMetadata(response.data))
+      .catch((error) => console.log(error));
   }, [])
 
   return (
     <>
     { username ?
       <div className="container">
-        <NavBar onSearchChange={onSearchChange}/>
+        <NavBar metadata={metadata} onSearchChange={onSearchChange}/>
         <div>
           <h1 className='title'>World of Music</h1>
           <div className='mode-buttons'>
@@ -108,12 +107,14 @@ const App: React.FC = () => {
           {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} />}
         </div>
         <Footer handleLogoutClick={handleLogoutClick}/>
-      </div> : <Login checkUser={checkUser} createUser={createUser} flag={invalidUsername} /> }
+      </div>
+      // login feature if no username is set
+      : <Login checkUser={checkUser} createUser={createUser} flag={invalidUsername} /> }
     </>
   )
-}
+};
 
-const root = createRoot(document.getElementById('root') as HTMLElement)
-root.render(<App />)
+const root = createRoot(document.getElementById('root') as HTMLElement);
+root.render(<App />);
 
-export default App
+export default App;

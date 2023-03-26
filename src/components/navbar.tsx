@@ -4,13 +4,14 @@ import { useState } from 'react';
 import DataBox from './dataBox';
 
 interface FunctionProps {
-  onSearchChange(e: React.ChangeEvent<HTMLInputElement>):void;
+  onSearchChange(e: React.ChangeEvent<HTMLInputElement>):void,
+  metadata: any[],
 }
 
 const data = [{'argentina': 5}, {'turkey': 10 }, {'usa': 14},]
 
 // pass an opener function to each child (analytics/fav/search) and when activated, open and pass props accordingly
-const NavBar: React.FC<FunctionProps> = ({ onSearchChange }) => {
+const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata }) => {
   const[isOpen, setOpen] = useState(false);
 
   const toggleNavbar = () => {
@@ -21,7 +22,7 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange }) => {
   }
 
   const restoreNavbar = (navbar: HTMLElement) => {
-    navbar.style.height = '10vh';
+    navbar.style.height = '11vh';
     navbar.style.backgroundColor = 'rgba(126, 126, 126, .5)';
     setOpen(false);
   }
@@ -52,7 +53,7 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange }) => {
         </div>
         { isOpen ?
           <div className='navbarLower'>
-            <DataBox data={['hi', 'two']}></DataBox>
+            <DataBox data={metadata}></DataBox>
             <button className='navbarCloseBtn' type='button' onClick={handleCloseButton}>^^^</button>
           </div>
         : <></>}

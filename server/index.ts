@@ -125,7 +125,9 @@ app.get('/getCountryData/:country', (req: Request, res: Response) => {
 })
 
 app.get('/getGlobalAnalytics', (req: Request, res: Response) => {
-  // Controllers.fetchGlobalAnalyticData();
+  Controllers.fetchGlobalAnalyticData()
+    .then((response) => res.status(200).send(response.rows))
+    .catch((error) => console.log(error));
 })
 
 app.post('/addFavorite', (req: Request, res: Response) => {

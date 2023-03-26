@@ -118,7 +118,7 @@ table {
 	margin-left: 57vw;
 	z-index: 15;
 	width: 41vw;
-	height: 10vh;
+	height: 11vh;
 	transition: 1.25s ease-in-out;
 }
 .navbarUpper {
@@ -130,7 +130,8 @@ table {
 .box {
 	width: 39vw;
 	margin-left: 1vw;
-	height: 78vh;
+	height: 80vh;
+	overflow-y: scroll;
 }
 @keyframes fadeIn {
 	0% {
@@ -139,6 +140,17 @@ table {
 	100% {
 		opacity: 1;
 	}
+}
+.dataEntry {
+	display: flex;
+	flex-direction: column;
+}
+.dataEntryRow {
+	display: flex;
+	flex-direction: row;
+	width: 90%;
+	padding: 5%;
+	justify-content: space-between;
 }
 .navbarLower {
 	display: flex;
@@ -200,7 +212,7 @@ color: whitesmoke;
 	position: fixed;
 	align-items: center;
 	justify-content: space-around;
-	top: 14vh;
+	top: 15vh;
 	z-index: 5;
 	background-color: rgba(95, 158, 160, 0.863);
 	border-top-right-radius: 25%;

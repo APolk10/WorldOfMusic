@@ -9,6 +9,7 @@ import trackClick from "../models/trackClick";
 
 export const fetchGlobalAnalyticData = () => {
   console.log('controller for fetchGlobalAnalyticData triggered');
+  return getGlobalAnalyticData();
 }
 export const checkForUser = (username: string, pin: number, session_id?: string) => {
   return checkUser(username, pin, session_id);
