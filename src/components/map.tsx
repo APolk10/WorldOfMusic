@@ -25,7 +25,7 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
     let countryISOCode: string = e.properties.ISO_A2;
     let countryName = e.properties.BRK_NAME;
 
-    axios.get(`http://localhost:3001/getCountryData/${countryISOCode}`)
+    axios.get(`http://localhost:3001/getCountryData/${countryISOCode}`, { withCredentials: true })
     .then((res: { data: {} }) => {
       setCountry(res.data)
       handleCountrySelection(res.data, countryName)
@@ -33,10 +33,7 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
       document.getElementById('countryInfoContainerToggle')!.style.animation = animation;
     });
 
-    axios.post(`http://localhost:3001/trackClick`, {
-      country: countryName,
-      iso: countryISOCode
-    })
+    axios.post(`http://localhost:3001/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
     .then((res: { data: {} }) => {
       console.log(res.data);
     })
