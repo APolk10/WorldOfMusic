@@ -21,12 +21,6 @@ app.use(cors<Request>(({
   origin: 'http://localhost:3000'
   })));
 
-declare module 'express-session' {
-  interface SessionData {
-    authenticated: boolean
-  }
-}
-
 app.use(expressSession({
   store: new pgSession({
     pool : db,
@@ -46,6 +40,11 @@ app.use(expressSession({
 
 // app.use(express.static(path.join(__dirname, '../public')));
 
+declare module 'express-session' {
+  interface SessionData {
+    authenticated: boolean
+  }
+}
 
 const MB_url: string = 'https://musicbrainz.org/ws/2/';
 

@@ -14,7 +14,7 @@ const Analytics: React.FC<AnalyticsProps> = () => {
   }
   return (
     <div className='analyticsBar' onClick={handleAnalyticsBarClick}>
-      { isActive ? <p className='inactiveAnalytics'>Analytics</p> : <p className='activeAnalytics'>Analytics</p> }
+      { isActive ? <p className='inactiveAnalytics'>Global Analytics</p> : <p className='activeAnalytics'>Global Analytics</p> }
       {/* send data to navbar to render */}
     </div>
   )

@@ -152,6 +152,9 @@ table {
 	padding: 5%;
 	justify-content: space-between;
 }
+.dataEntryRow:hover, #sortClicksBtn:hover {
+	background-color: rgba(148, 148, 39, 0.787);
+}
 .navbarLower {
 	display: flex;
 	flex-direction: column;
@@ -163,15 +166,30 @@ table {
 	animation-iteration-count: 1;
 	transition: ease-in-out;
 }
+
 .box {
-	border: 2px red solid;
+	border: 2px whitesmoke solid;
+}
+.boxHeader {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 2%;
+	padding-right: 2%;
+	width: 96%;
+	height: 8%;
+	border-bottom: 2px white solid;
+}
+#sortClicksBtn {
+	background-color: whitesmoke;
+	color: black;
+	width: 10vw;
+	height: 4vh;
 }
 .navbarCloseBtn {
 	width: 10vw;
 }
-/* #navbar:hover {
-	background-color: rgba(126, 126, 126, .9);
-} */
 .searchFunctionLabelBox {
 	display: flex;
 	gap: 1vh;
