@@ -85,7 +85,7 @@ const App: React.FC = () => {
           console.log('error checking credentials')
         }
     })
-      .catch((error) => console.log('error from server', error))
+      .catch((error) => console.log('error from server when checking credentials', error))
 
     axios.get('http://localhost:3001/getGlobalAnalytics', { withCredentials: true })
       .then((response) => setMetadata(response.data))

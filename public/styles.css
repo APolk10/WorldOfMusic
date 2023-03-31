@@ -30,7 +30,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-	background-color: rgb(36, 35, 35);
+
+	background-color: black;
 }
 ol, ul {
 	list-style: none;
@@ -83,6 +84,8 @@ table {
 	margin-left: 4vw;
 	margin-top: 2.5vh;
 	margin-bottom: 2vh;
+	-webkit-text-stroke: .75px rgb(19, 202, 215);
+	-webkit-text-fill-color: black;
 }
 .mode-buttons {
 	display: flex;
@@ -92,22 +95,23 @@ table {
 }
 .mode-button, .logoutButton {
 	background-color: rgba(0, 0, 0, 0.531);
-	border: none;
+	border: white 1px solid;
 	color: white;
 	font-size: 1vw;
 	width: 16vw;
 	height: 6vh;
 }
 .mode-button:hover, .logoutButton:hover {
-	background-color: rgba(148, 148, 39, 0.787);
+	background-color: rgba(19, 202, 215, .6);
 	cursor: pointer;
 	cursor:text hello;
 }
 .navbar {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	gap: 2vh;
 	align-items: flex-start;
+	justify-content: space-between;
 	position: fixed;
 	border: white 2px solid;
 	background-color: rgba(126, 126, 126, .5);
@@ -128,8 +132,8 @@ table {
 	width: 41vw;
 }
 .box {
-	width: 39vw;
-	margin-left: 1vw;
+	width: 34vw;
+	margin-left: 3.5vw;
 	height: 80vh;
 	overflow-y: scroll;
 }
@@ -152,8 +156,8 @@ table {
 	padding: 5%;
 	justify-content: space-between;
 }
-.dataEntryRow:hover, #sortClicksBtn:hover {
-	background-color: rgba(148, 148, 39, 0.787);
+.dataEntryRow:hover, #sortClicksBtnAscend:hover, #sortClicksBtnDescend:hover {
+	background-color: rgba(19, 202, 215, .6);
 }
 .navbarLower {
 	display: flex;
@@ -166,9 +170,9 @@ table {
 	animation-iteration-count: 1;
 	transition: ease-in-out;
 }
-
 .box {
 	border: 2px whitesmoke solid;
+	overflow-y: hidden;
 }
 .boxHeader {
 	display: flex;
@@ -178,16 +182,45 @@ table {
 	padding-left: 2%;
 	padding-right: 2%;
 	width: 96%;
-	height: 8%;
+	height: 8%; /* leaves 92 for boxData */
 	border-bottom: 2px white solid;
 }
-#sortClicksBtn {
-	background-color: whitesmoke;
-	color: black;
+.boxData {
+	height: 92%;
+	overflow-y: scroll;
+}
+#sortClicksBtns {
+	display: flex;
+	flex-direction: row;
 	width: 10vw;
+	gap: .5vw;
 	height: 4vh;
 }
+#sortClicksBtnAscend, #sortClicksBtnDescend {
+	background-color: rgb(114, 114, 114);
+	color: black;
+	border: none;
+	font-size: 1.25vw;
+	width: 5vw;
+}
+#sortClicksBtnAscend {
+	transform: scaleY(-1);
+}
+.navbarOpenBtn {
+	background-color: black;
+	border-top: 1px solid white;
+	color: white;
+	font-size: 1.25vw;
+	margin-top: -5vh;
+	margin-left: 40%;
+	width: 20%;
+}
 .navbarCloseBtn {
+	margin-top: .5vh;
+	background-color: black;
+	color: white;
+	font-size: 1.5vw;
+	border: white 1px solid;
 	width: 10vw;
 }
 .searchFunctionLabelBox {
@@ -206,7 +239,8 @@ table {
 	height: 3vh;
 	width: 12vw;
 	border: none;
-	background-color: rgba(178, 178, 178, 0.52);
+	background-color: rgba(0, 0, 0, 0.52);
+	padding-left: .5vw;
 }
 #searchForCountryButton {
 	background-color: rgba(245, 245, 245, 0.523);
@@ -346,13 +380,16 @@ color: whitesmoke;
 	color: whitesmoke;
 	background-color: rgb(45, 45, 45);
 }
-.spotifyButton:hover, .addFavButton:hover {
-	background-color: rgba(0, 133, 60, 0.824);
+.spotifyButton:hover, .addFavButton:hover, .navbarCloseBtn:hover, .navbarOpenBtn:hover {
+	background-color: rgba(19, 202, 215, .6);
 	cursor: pointer;
 }
 .mapContainer {
 	display: flex;
 	justify-content: center;
+	margin-left: 10%;
+	/* border: 2px solid rgb(16, 205, 211); */
+	width: 80vw;
 	margin-top: 5vh;
 }
 .footer {

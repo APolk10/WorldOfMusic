@@ -15,6 +15,7 @@ const app: Express = express();
 const port = process.env.PORT;
 
 app.use(express.json());
+
 app.use(cors<Request>(({
   credentials: true,
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
@@ -109,12 +110,12 @@ app.post('/existingUserLogin', (req: Request, res: Response) => {
     }
 })
 
-app.get('/profile/:username', (req: Request, res: Response) => {
-  let username = req.params.username;
-  let sid = req.session;
-  Controllers.fetchUserData(username)
-    .then((response) => console.log(response))
-})
+// app.get('/profile/:username', (req: Request, res: Response) => {
+//   let username = req.params.username;
+//   let sid = req.session;
+//   Controllers.fetchUserData(username)
+//     .then((response) => console.log(response))
+// })
 
 app.get('/getCountryData/:country', (req: Request, res: Response) => {
   let isoCode: string = req.params.country;
@@ -132,7 +133,7 @@ app.get('/getGlobalAnalytics', (req: Request, res: Response) => {
 app.post('/addFavorite', (req: Request, res: Response) => {
   let countryToAdd: string = req.body.country;
   let username: string = req.body.username;
-  // call controller to handle next steps
+
   Controllers.addFavorite(countryToAdd, username);
 })
 
@@ -147,7 +148,6 @@ app.post('/trackClick', (req: Request, res: Response) => {
   Controllers.incrementClickData(countryClicked, iso_code)
     .then((response) => res.status(200).send('click tracked'))
     .catch((error) => console.log(error))
-  // call controller to handle next steps
 })
 
 app.post('/logout', (req: Request, res: Response) => {

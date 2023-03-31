@@ -1,5 +1,4 @@
 import * as React from 'react';
-import axios from 'axios';
 
 interface FooterProps {
   handleLogoutClick():void,

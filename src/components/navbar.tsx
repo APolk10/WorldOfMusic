@@ -44,7 +44,7 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata }) => {
         <div className='navbarUpper'>
           <label className='searchFunctionLabelBox'>Find A Country
           <div className='searchInputs'>
-            <input id='searchForCountryInput' type='search' onChange={onSearchChange}></input>
+            <input id='searchForCountryInput' type='search' placeholder='country name' onChange={onSearchChange}></input>
             <input id='searchForCountryButton' type='submit' value='Go!'></input>
           </div>
           </label>
@@ -54,9 +54,11 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata }) => {
         { isOpen ?
           <div className='navbarLower'>
             <DataBox data={metadata}></DataBox>
-            <button className='navbarCloseBtn' type='button' onClick={handleCloseButton}>^^^</button>
+            <button className='navbarCloseBtn' type='button' onClick={handleCloseButton}>Close</button>
           </div>
-        : <></>}
+        : <>
+            <button className='navbarOpenBtn' type='button' onClick={toggleNavbar}>See More!</button>
+          </>}
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Globe from'react-globe.gl';
 import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
@@ -51,10 +51,12 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
   function handlePolygonHover(hex: any) {
   }
 
+  const w = window.innerWidth;
+
   return (
     <div className='mapContainer'>
       <Globe
-          width={1400}
+          width={w * .8}
           backgroundColor='black'
           globeImageUrl={'images/worldMap2.jpg'}
           backgroundImageUrl={'//unpkg.com/three-globe/example/img/night-sky.png'}

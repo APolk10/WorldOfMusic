@@ -17,14 +17,23 @@ const DataBox: React.FC<dataBoxProps> = ({ data }) => {
     setReshapedData(reshapedData)
   }
 
-  const handleSortClick = () => {
-    let sortedData: any[] = reshapedData;
-    sortedData.sort(sortNums);
+  const handleSortClickDescend = () => {
+    let sortedData = reshapedData.slice();
+    sortedData = sortedData.sort(sortNumsDescending);
     setReshapedData(sortedData)
   }
 
-  const sortNums = (a: any[], b: any[]) => {
+  const handleSortClickAscend = () => {
+    let sortedData: any[] = reshapedData.slice();
+    sortedData = sortedData.sort(sortNumsAscending);
+    setReshapedData(sortedData)
+  }
+
+  const sortNumsDescending = (a: any[], b: any[]) => {
     return b[1] - a[1];
+  }
+  const sortNumsAscending = (a: any[], b: any[]) => {
+    return a[1] - b[1];
   }
 
   useEffect(() => {
@@ -36,15 +45,20 @@ const DataBox: React.FC<dataBoxProps> = ({ data }) => {
       <div className='box'>
         <div className='boxHeader'>
           <p>World Data By Clicks</p>
-          <button  id='sortClicksBtn' type='button' onClick={handleSortClick}>Sort</button>
+          <div id='sortClicksBtns'>
+            <button id='sortClicksBtnDescend' type='button' onClick={handleSortClickDescend}>v</button>
+            <button  id='sortClicksBtnAscend' type='button' onClick={handleSortClickAscend}>v</button>
+          </div>
         </div>
-        {reshapedData.map(country => (
-          <div className='dataEntry' key={country[0]}>
-            <div className='dataEntryRow'>
-              <p>{country[0]}</p>
-              <p>Clicks: {country[1]}</p>
-            </div>
-          </div>))}
+        <div className='boxData'>
+          {reshapedData.map(country => (
+            <div className='dataEntry' key={country[0]}>
+              <div className='dataEntryRow' key={country[0] + 'row'}>
+                <p key={country[0] + 'name'}>{country[0]}</p>
+                <p key={country[0] + 'clicks'}>Clicks: {country[1]}</p>
+              </div>
+            </div>))}
+        </div>
       </div>
     </div>
   )
