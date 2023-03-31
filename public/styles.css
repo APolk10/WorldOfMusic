@@ -109,9 +109,6 @@ table {
 .navbar {
 	display: flex;
 	flex-direction: column;
-	gap: 2vh;
-	align-items: flex-start;
-	justify-content: space-between;
 	position: fixed;
 	border: white 2px solid;
 	background-color: rgba(126, 126, 126, .5);
@@ -125,16 +122,22 @@ table {
 	height: 11vh;
 	transition: 1.25s ease-in-out;
 }
+.analyticsBar, .favoritesBar, .searchFunctionLabelBox {
+	display: flex;
+	align-items: center;
+	height: 4vh;
+}
 .navbarUpper {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+	height: 100%;
 	width: 41vw;
 }
 .box {
 	width: 34vw;
-	margin-left: 3.5vw;
-	height: 80vh;
+	margin-top: 2vh;
+	height: 78vh;
 	overflow-y: scroll;
 }
 @keyframes fadeIn {
@@ -206,15 +209,7 @@ table {
 #sortClicksBtnAscend {
 	transform: scaleY(-1);
 }
-.navbarOpenBtn {
-	background-color: black;
-	border-top: 1px solid white;
-	color: white;
-	font-size: 1.25vw;
-	margin-top: -5vh;
-	margin-left: 40%;
-	width: 20%;
-}
+
 .navbarCloseBtn {
 	margin-top: .5vh;
 	background-color: black;
