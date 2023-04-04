@@ -59,7 +59,7 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
           width={w * .8}
           backgroundColor='black'
           globeImageUrl={'images/worldMap2.jpg'}
-          backgroundImageUrl={'//unpkg.com/three-globe/example/img/night-sky.png'}
+          backgroundImageUrl={'images/night-sky.png'}
           polygonsData={countries.features}
           polygonCapColor={polygonColor}
           polygonSideColor={(polygonOutline)}

@@ -53,7 +53,7 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
         width={w * .8}
         backgroundColor='black'
         globeImageUrl={'images/worldMap2.jpg'}
-        backgroundImageUrl={'//unpkg.com/three-globe/example/img/night-sky.png'}
+        backgroundImageUrl={'images/night-sky.png'}
         hexPolygonsData={countries.features}
         hexPolygonsTransitionDuration={100}
         hexPolygonResolution={3}

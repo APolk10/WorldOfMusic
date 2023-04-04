@@ -24,14 +24,14 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata }) => {
   }
 
   const restoreNavbar = (navbar: HTMLElement) => {
-    navbar.style.height = '11vh';
-    navbar.style.backgroundColor = 'rgba(126, 126, 126, .5)';
+    navbar.style.height = '13vh';
+    navbar.style.backgroundColor = 'rgba(69, 233, 233, 0.25)';
     setOpen(false);
   }
 
   const adjustNavbar = (navbar: HTMLElement) => {
     navbar.style.height = '96vh';
-    navbar.style.backgroundColor = 'black'
+    navbar.style.backgroundColor = 'rgba(69, 233, 233, 0.25)'
     setOpen(true);
   }
 
@@ -44,12 +44,14 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata }) => {
     <div>
       <div className='navbar' id='navbar'>
         <div className='navbarUpper'>
-          <label className='searchFunctionLabelBox'>Find A Country
-          <div className='searchInputs'>
-            <input id='searchForCountryInput' type='search' placeholder='country name' onChange={onSearchChange}></input>
-            <input id='searchForCountryButton' type='submit' value='Go!'></input>
+          <div>
+            <label className='searchFunctionLabelBox'>Find A Country
+            <div className='searchInputs'>
+              <input id='searchForCountryInput' type='search' placeholder='country name' onChange={onSearchChange}></input>
+              <input id='searchForCountryButton' type='submit' value='Go!'></input>
+            </div>
+            </label>
           </div>
-          </label>
           <Favorites toggle={toggleNavbar}/>
           <Analytics toggle={toggleNavbar}/>
         </div>
