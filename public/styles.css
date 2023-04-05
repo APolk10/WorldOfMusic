@@ -85,7 +85,7 @@ table {
 	margin-top: 2.5vh;
 	margin-bottom: 2vh;
 	-webkit-text-stroke: .75px rgb(19, 202, 215);
-	-webkit-text-fill-color: black;
+	-webkit-text-fill-color: rgb(4, 18, 19);
 }
 .mode-buttons {
 	display: flex;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Globe from'react-globe.gl';
 import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
@@ -8,41 +8,38 @@ interface hexMapProps {
   handleCountrySelection({}, name: string):void;
 }
 
+const animation = 'flashSideBar 1s linear infinite';
+
 const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
-  const[countries, setCountries] = useState(mapOverlay);
-  const[countryClicked, setClicked] = useState();
-  const[selectedCountry, setCountry] = useState({});
+  let countryClicked = {};
+  let countryRef = useRef(countryClicked);
 
   function handlePolygonClick(e: any) {
-    setClicked(e);
+    countryRef.current = e;
     let countryISOCode: string = e.properties.ISO_A2;
-    let countryName: string = e.properties.BRK_NAME;
+    let countryName = e.properties.BRK_NAME;
 
     axios.get(`http://localhost:3001/getCountryData/${countryISOCode}`, { withCredentials: true })
-    .then((res) => {
-      setCountry(res.data)
+    .then((res: { data: {} }) => {
       handleCountrySelection(res.data, countryName)
+      document.getElementById('countryInfoContainer')!.style.animation = animation;
+      document.getElementById('countryInfoContainerToggle')!.style.animation = animation;
     });
 
     axios.post(`http://localhost:3001/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
-    .then((res) => {
+    .then((res: { data: {} }) => {
       console.log(res.data);
     })
     .catch((err) => console.log(err))
   }
 
   function randomRGB() {
-    let randomColor: string = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    let randomColor: string = `#${Math.floor(Math.random() * Math.pow(2, 24)).toString(16).padStart(6, '0')}`;
     return randomColor;
   }
 
   function randomizeColor() {
-    // 177 is the color threshold
-    let randomColor: string = randomRGB();
-    return randomColor;
-  }
-
-  function handlePolygonHover(hex: any) {
+    return randomRGB();
   }
 
   const w = window.innerWidth;
@@ -54,13 +51,12 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
         backgroundColor='black'
         globeImageUrl={'images/worldMap2.jpg'}
         backgroundImageUrl={'images/night-sky.png'}
-        hexPolygonsData={countries.features}
+        hexPolygonsData={mapOverlay.features}
         hexPolygonsTransitionDuration={100}
         hexPolygonResolution={3}
         hexPolygonColor={randomizeColor}
-        hexPolygonAltitude={(d) => d === countryClicked ? 0.1 : 0.01}
+        hexPolygonAltitude={(d) => d === countryRef.current ? 0.15 : 0.01}
         onHexPolygonClick={handlePolygonClick}
-        onHexPolygonHover={handlePolygonHover}
         showAtmosphere={true}
         />
     </div>

@@ -11,14 +11,8 @@ interface mapProps {
 const animation = 'flashSideBar 1s linear infinite';
 
 const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
-  const[countries, setCountries] = useState(mapOverlay);
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
-
-  // possibly implement a static colorset after first render of all countries
-  const[colors, addColors] = useState([]);
-  const[counter, incrementCounter] = useState(1);
-
 
   function handlePolygonClick(e: any) {
     setClicked(e);
@@ -60,7 +54,7 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
           backgroundColor='black'
           globeImageUrl={'images/worldMap2.jpg'}
           backgroundImageUrl={'images/night-sky.png'}
-          polygonsData={countries.features}
+          polygonsData={mapOverlay.features}
           polygonCapColor={polygonColor}
           polygonSideColor={(polygonOutline)}
           polygonStrokeColor={polygonOutline}
