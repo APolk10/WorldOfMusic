@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import Globe from'react-globe.gl';
 import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
@@ -49,7 +49,8 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
       <Globe
         width={w * .8}
         backgroundColor='black'
-        globeImageUrl={'images/worldMap2.jpg'}
+        // globeImageUrl={'images/worldMap2.jpg'}
+        globeImageUrl={'images/earth-dark.jpg'}
         backgroundImageUrl={'images/night-sky.png'}
         hexPolygonsData={mapOverlay.features}
         hexPolygonsTransitionDuration={100}
