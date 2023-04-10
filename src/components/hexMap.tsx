@@ -19,14 +19,14 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
     let countryISOCode: string = e.properties.ISO_A2;
     let countryName = e.properties.BRK_NAME;
 
-    axios.get(`http://localhost:3001/getCountryData/${countryISOCode}`, { withCredentials: true })
+    axios.get(`http://localhost:10000/getCountryData/${countryISOCode}`, { withCredentials: true })
     .then((res: { data: {} }) => {
       handleCountrySelection(res.data, countryName)
       document.getElementById('countryInfoContainer')!.style.animation = animation;
       document.getElementById('countryInfoContainerToggle')!.style.animation = animation;
     });
 
-    axios.post(`http://localhost:3001/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
+    axios.post(`http://localhost:10000/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
     .then((res: { data: {} }) => {
       console.log(res.data);
     })

@@ -30,7 +30,7 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry, usern
 
   const handleFavoritesClick = () => {
     console.log(nameOfCountry)
-    axios.post('http://localhost:3000/addFavorite', { country: nameOfCountry, username: username }, { withCredentials: true })
+    axios.post('http://localhost:10000/addFavorite', { country: nameOfCountry, username: username }, { withCredentials: true })
       .then((res) => console.log(res))
       .catch((res) => console.log(res));
   }
