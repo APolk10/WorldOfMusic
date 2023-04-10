@@ -14,7 +14,7 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
 
-  const URL = 'https://world-of-music.onrender.com:10000';
+  const URL = 'https://world-of-music.onrender.com';
 
   function handlePolygonClick(e: any) {
     setClicked(e);

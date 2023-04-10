@@ -18,7 +18,7 @@ const App: React.FC = () => {
   const[nameOfCountry, setNameOfCountry] = useState('');
   const[metadata, setMetadata] = useState([]);
 
-  const URL = 'https://world-of-music.onrender.com:10000';
+  const URL = 'https://world-of-music.onrender.com';
 
   const handleModeButtonClick = (e: any):void => {
     setMode(e.target.value);

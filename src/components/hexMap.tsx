@@ -14,7 +14,7 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
   let countryClicked = {};
   let countryRef = useRef(countryClicked);
 
-  const URL = 'https://world-of-music.onrender.com:10000';
+  const URL = 'https://world-of-music.onrender.com';
 
   function handlePolygonClick(e: any) {
     countryRef.current = e;
