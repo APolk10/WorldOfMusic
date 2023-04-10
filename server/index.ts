@@ -20,7 +20,8 @@ app.use(express.json());
 app.use(cors<Request>(({
   credentials: true,
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-  origin: 'http://localhost:3000'
+  // change when making changes in development
+  origin: 'https://world-of-music.onrender.com/'
   })));
 
 app.use(expressSession({
