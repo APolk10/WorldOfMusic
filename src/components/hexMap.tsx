@@ -14,19 +14,21 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
   let countryClicked = {};
   let countryRef = useRef(countryClicked);
 
+  const URL = 'https://world-of-music.onrender.com:10000';
+
   function handlePolygonClick(e: any) {
     countryRef.current = e;
     let countryISOCode: string = e.properties.ISO_A2;
     let countryName = e.properties.BRK_NAME;
 
-    axios.get(`http://localhost:10000/getCountryData/${countryISOCode}`, { withCredentials: true })
+    axios.get(`${URL}/getCountryData/${countryISOCode}`, { withCredentials: true })
     .then((res: { data: {} }) => {
       handleCountrySelection(res.data, countryName)
       document.getElementById('countryInfoContainer')!.style.animation = animation;
       document.getElementById('countryInfoContainerToggle')!.style.animation = animation;
     });
 
-    axios.post(`http://localhost:10000/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
+    axios.post(`${URL}/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
     .then((res: { data: {} }) => {
       console.log(res.data);
     })
@@ -49,7 +51,6 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
       <Globe
         width={w * .8}
         backgroundColor='black'
-        // globeImageUrl={'images/worldMap2.jpg'}
         globeImageUrl={'images/earth-dark.jpg'}
         backgroundImageUrl={'images/night-sky.png'}
         hexPolygonsData={mapOverlay.features}

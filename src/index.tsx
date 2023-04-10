@@ -18,6 +18,8 @@ const App: React.FC = () => {
   const[nameOfCountry, setNameOfCountry] = useState('');
   const[metadata, setMetadata] = useState([]);
 
+  const URL = 'https://world-of-music.onrender.com:10000';
+
   const handleModeButtonClick = (e: any):void => {
     setMode(e.target.value);
   }
@@ -33,7 +35,7 @@ const App: React.FC = () => {
 
   const handleLogoutClick = () => {
     let currentURL = window.location.pathname;
-    axios.post('http://localhost:10000/logout', { username: username }, { withCredentials: true })
+    axios.post(`${URL}/logout`, { username: username }, { withCredentials: true })
       .then(() => {
         setUsername('')
         setProfile('')
@@ -42,7 +44,7 @@ const App: React.FC = () => {
   }
 
   const checkUser = (username: string, pin: number) => {
-    axios.post(`http://localhost:10000/existingUserLogin`,{ username: username, pin: pin }, { withCredentials: true })
+    axios.post(`${URL}/existingUserLogin`,{ username: username, pin: pin }, { withCredentials: true })
     .then((response) => {
       let name = response.data;
       if (name === 'taken') {
@@ -56,7 +58,7 @@ const App: React.FC = () => {
   }
 
   const createUser = (username: string, pin: number) => {
-    axios.post('http://localhost:10000/newUserLogin', { username: username, pin: pin }, { withCredentials: true })
+    axios.post(`${URL}/newUserLogin`, { username: username, pin: pin }, { withCredentials: true })
       .then((response) => {
         // assumes returned username
         if (response) {
@@ -73,7 +75,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // check for existing session
-    axios.get('http://localhost:10000/checkCredentials', { withCredentials: true })
+    axios.get(`${URL}/checkCredentials`, { withCredentials: true })
       .then((response) => {
         if (response.data === 'no name found') {
           console.log('no name found in database');
@@ -87,7 +89,7 @@ const App: React.FC = () => {
     })
       .catch((error) => console.log('error from server when checking credentials', error))
 
-    axios.get('http://localhost:10000/getGlobalAnalytics', { withCredentials: true })
+    axios.get(`${URL}/getGlobalAnalytics`, { withCredentials: true })
       .then((response) => setMetadata(response.data))
       .catch((error) => console.log(error));
   }, [])

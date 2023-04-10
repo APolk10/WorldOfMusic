@@ -14,19 +14,21 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
 
+  const URL = 'https://world-of-music.onrender.com:10000';
+
   function handlePolygonClick(e: any) {
     setClicked(e);
     let countryISOCode: string = e.properties.ISO_A2;
     let countryName = e.properties.BRK_NAME;
 
-    axios.get(`http://localhost:10000/getCountryData/${countryISOCode}`, { withCredentials: true })
+    axios.get(`${URL}/getCountryData/${countryISOCode}`, { withCredentials: true })
     .then((res: { data: {} }) => {
       setCountry(res.data)
       handleCountrySelection(res.data, countryName)
       document.getElementById('countryInfoContainer')!.style.animation = animation;
     });
 
-    axios.post(`http://localhost:10000/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
+    axios.post(`${URL}/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
     .then((res: { data: {} }) => {
       console.log(res.data);
     })

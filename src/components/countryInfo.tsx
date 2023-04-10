@@ -13,6 +13,8 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry, usern
   const[open, setOpen] = useState(false);
   const[header, setHeader] = useState({ text: 'Click a country to find music!'})
 
+  const URL = 'https://world-of-music.onrender.com:10000';
+
   const handleSideBarButtonPush = () => {
     open === false ? openSideBar() : closeSideBar();
   }
@@ -30,7 +32,7 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry, usern
 
   const handleFavoritesClick = () => {
     console.log(nameOfCountry)
-    axios.post('http://localhost:10000/addFavorite', { country: nameOfCountry, username: username }, { withCredentials: true })
+    axios.post(`${URL}/addFavorite`, { country: nameOfCountry, username: username }, { withCredentials: true })
       .then((res) => console.log(res))
       .catch((res) => console.log(res));
   }
