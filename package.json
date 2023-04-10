@@ -39,7 +39,8 @@
     "pg": "^8.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-globe.gl": "^2.22.10"
+    "react-globe.gl": "^2.22.10",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
