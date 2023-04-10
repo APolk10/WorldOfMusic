@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 
 interface TileProps {
   artist: {
@@ -10,14 +11,16 @@ interface TileProps {
     type: string,
   },
   nameOfCountry: string,
+  handleFavoritesClick():void
 }
 
-const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry }) => {
+const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, handleFavoritesClick }) => {
 
   const redirectToSpotify = () => {
     const link = `https://open.spotify.com/search/${artist.name}`
     window.open(link, "_blank");
   }
+
 
   return (
     <div className='tileBox'>
@@ -39,7 +42,7 @@ const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry }) => {
         <div>
           <div className='buttonsDiv'>
             <button type='submit' className='spotifyButton' onClick={redirectToSpotify}>Find Their Music</button>
-            <button className='addFavButton'>Favorite This</button>
+            <button type='button' className='addFavButton' onClick={handleFavoritesClick}>Favorite This</button>
           </div>
         </div>
 

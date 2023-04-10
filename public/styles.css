@@ -282,6 +282,7 @@ color: whitesmoke;
 	width: 100vw;
 	overflow-x: hidden;
 	transition: 1.5s ease-in-out;
+	animation: none;
 }
 .placeholderText {
 	display: flex;

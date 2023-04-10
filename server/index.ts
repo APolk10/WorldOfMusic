@@ -5,6 +5,7 @@ import * as cors from 'cors';
 import * as Controllers from './controllers/index'
 import db from '../database//index';
 import * as path from 'path';
+import { count } from 'console';
 const axios = require('axios').default;
 const expressSession = require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
@@ -39,11 +40,11 @@ app.use(expressSession({
 }));
 
 
-// app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 declare module 'express-session' {
-  interface SessionData {
-    authenticated: boolean
+  export interface SessionData {
+    authenticated?: boolean
   }
 }
 
@@ -134,7 +135,9 @@ app.post('/addFavorite', (req: Request, res: Response) => {
   let countryToAdd: string = req.body.country;
   let username: string = req.body.username;
 
-  Controllers.addFavorite(countryToAdd, username);
+  console.log('addfav:', countryToAdd, username)
+
+  // Controllers.addFavorite(countryToAdd, username);
 })
 
 app.post('/removeFavorite', (req: Request, res: Response) => {

@@ -24,7 +24,6 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
       setCountry(res.data)
       handleCountrySelection(res.data, countryName)
       document.getElementById('countryInfoContainer')!.style.animation = animation;
-      document.getElementById('countryInfoContainerToggle')!.style.animation = animation;
     });
 
     axios.post(`http://localhost:3001/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
