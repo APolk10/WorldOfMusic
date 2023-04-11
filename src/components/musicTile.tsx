@@ -16,8 +16,8 @@ interface TileProps {
 
 const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, username }) => {
 
-  // const URL = 'https://world-of-music.onrender.com';
-  const URL = 'http://localhost:3001';
+  const URL = 'https://world-of-music.onrender.com';
+  // const URL = 'http://localhost:3001';
 
   const redirectToSpotify = () => {
     const link = `https://open.spotify.com/search/${artist.name}`

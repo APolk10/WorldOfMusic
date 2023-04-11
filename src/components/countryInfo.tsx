@@ -13,8 +13,8 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry, usern
   const[open, setOpen] = useState(false);
   const[header, setHeader] = useState({ text: 'Click a country to find music!'})
 
-  // const URL = 'https://world-of-music.onrender.com';
-  const URL = 'http://localhost:3001';
+  const URL = 'https://world-of-music.onrender.com';
+  // const URL = 'http://localhost:3001';
 
   const handleSideBarButtonPush = () => {
     open === false ? openSideBar() : closeSideBar();

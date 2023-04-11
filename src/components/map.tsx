@@ -14,8 +14,8 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
 
-  // const URL = 'https://world-of-music.onrender.com';
-  const URL = 'http://localhost:3001';
+  const URL = 'https://world-of-music.onrender.com';
+  // const URL = 'http://localhost:3001';
 
   function handlePolygonClick(e: any) {
     setClicked(e);
@@ -52,7 +52,7 @@ const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
   return (
     <div className='mapContainer'>
       <Globe
-          width={w * .8}
+          width={w * .95}
           backgroundColor='black'
           globeImageUrl={'images/worldMap2.jpg'}
           backgroundImageUrl={'images/night-sky.png'}

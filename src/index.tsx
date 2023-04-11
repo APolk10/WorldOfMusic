@@ -19,8 +19,8 @@ const App: React.FC = () => {
   const[metadata, setMetadata] = useState([]);
   const[favorites, setFavorites] = useState([]);
 
-  // const URL = 'https://world-of-music.onrender.com';
-  const URL = 'http://localhost:3001';
+  const URL = 'https://world-of-music.onrender.com';
+  // const URL = 'http://localhost:3001';
 
   const handleModeButtonClick = (e: any):void => {
     setMode(e.target.value);
