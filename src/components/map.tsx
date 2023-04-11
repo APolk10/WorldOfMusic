@@ -5,36 +5,16 @@ import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 
 interface mapProps {
-  handleCountrySelection({}, name: string):void;
+  handleCountrySelection(dataFromAPI: { artists: [] }, countryName: string):void,
+  handlePolygonClick(e: any):void,
+  countryClicked: any
 }
 
-const animation = 'flashSideBar 1s linear infinite';
-
-const Map: React.FC<mapProps> = ({ handleCountrySelection }) => {
-  const[countryClicked, setClicked] = useState();
+const Map: React.FC<mapProps> = ({ handleCountrySelection, handlePolygonClick, countryClicked }) => {
   const[selectedCountry, setCountry] = useState({});
 
-  const URL = 'https://world-of-music.onrender.com';
-  // const URL = 'http://localhost:3001';
-
-  function handlePolygonClick(e: any) {
-    setClicked(e);
-    let countryISOCode: string = e.properties.ISO_A2;
-    let countryName = e.properties.BRK_NAME;
-
-    axios.get(`${URL}/getCountryData/${countryISOCode}`, { withCredentials: true })
-    .then((res: { data: {} }) => {
-      setCountry(res.data)
-      handleCountrySelection(res.data, countryName)
-      document.getElementById('countryInfoContainer')!.style.animation = animation;
-    });
-
-    axios.post(`${URL}/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
-    .then((res: { data: {} }) => {
-      console.log(res.data);
-    })
-    .catch((err) => console.log(err))
-  }
+  // const URL = 'https://world-of-music.onrender.com';
+  const URL = 'http://localhost:3001';
 
   function polygonColor() {
     return '#325240';

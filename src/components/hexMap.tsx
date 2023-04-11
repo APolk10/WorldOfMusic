@@ -5,7 +5,7 @@ import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 
 interface hexMapProps {
-  handleCountrySelection({}, name: string):void;
+  handleCountrySelection({}, name: string):void
 }
 
 const animation = 'flashSideBar 1s linear infinite';
@@ -14,8 +14,8 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
   let countryClicked = {};
   let countryRef = useRef(countryClicked);
 
-  const URL = 'https://world-of-music.onrender.com';
-  // const URL = 'http://localhost:3001';
+  // const URL = 'https://world-of-music.onrender.com';
+  const URL = 'http://localhost:3001';
 
   function handlePolygonClick(e: any) {
     countryRef.current = e;

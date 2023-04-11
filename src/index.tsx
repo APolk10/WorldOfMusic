@@ -1,13 +1,14 @@
-import * as React from 'react'
-import { useState, useEffect } from 'react'
-import { createRoot } from 'react-dom/client'
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { createRoot } from 'react-dom/client';
 import axios from 'axios';
-import CountryInfo from './components/countryInfo'
-import HexMap from './components/hexMap'
-import Map from './components/map'
-import NavBar from './components/navbar'
-import Footer from './components/footer'
-import Login from './components/login'
+import CountryInfo from './components/countryInfo';
+import HexMap from './components/hexMap';
+import Map from './components/map';
+import NavBar from './components/navbar';
+import Footer from './components/footer';
+import Login from './components/login';
+import { countryToAlpha2 } from 'country-to-iso';
 
 const App: React.FC = () => {
   const[username, setUsername] = useState('');
@@ -18,21 +19,57 @@ const App: React.FC = () => {
   const[nameOfCountry, setNameOfCountry] = useState('');
   const[metadata, setMetadata] = useState([]);
   const[favorites, setFavorites] = useState([]);
+  const[searchInput, setSearchInput] = useState('');
+  const[countryClicked, setClicked] = useState();
+  const[selectedCountry, setCountry] = useState({});
 
-  const URL = 'https://world-of-music.onrender.com';
-  // const URL = 'http://localhost:3001';
+  // const URL = 'https://world-of-music.onrender.com';
+  const URL = 'http://localhost:3001';
+
+  const animation = 'flashSideBar 1s linear infinite';
 
   const handleModeButtonClick = (e: any):void => {
     setMode(e.target.value);
   }
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
-    console.log(e.target.value);
+    setSearchInput(e.target.value);
+  }
+
+  const handleCountrySearch = () => {
+    let countryISOCode = countryToAlpha2(searchInput);
+    let countryName = searchInput;
+    getCountryData(countryISOCode!, countryName)
   }
 
   const handleCountrySelection = (dataFromAPI: { artists: [] }, countryName: string) => {
     setCountryArtists(dataFromAPI.artists);
     setNameOfCountry(countryName);
+  }
+
+  const handlePolygonClick = (e: any) => {
+    setClicked(e);
+    let countryISOCode: string = e.properties.ISO_A2;
+    let countryName = e.properties.BRK_NAME;
+    getCountryData(countryISOCode, countryName);
+  }
+
+  const getCountryData = (countryISOCode: string, countryName: string) => {
+    axios.get(`${URL}/getCountryData/${countryISOCode}`, { withCredentials: true })
+    .then((res) => {
+      setCountry(res.data)
+      handleCountrySelection(res.data, countryName)
+      document.getElementById('countryInfoContainer')!.style.animation = animation;
+    });
+    trackClick(countryISOCode, countryName);
+  }
+
+  const trackClick = (countryISOCode: string, countryName: string) => {
+    axios.post(`${URL}/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
+    .then((res: { data: {} }) => {
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err))
   }
 
   const handleLogoutClick = () => {
@@ -75,6 +112,7 @@ const App: React.FC = () => {
       })
   }
 
+
   useEffect(() => {
     // check for existing session
     let returnedUsername = '';
@@ -109,15 +147,15 @@ const App: React.FC = () => {
     <>
     { username ?
       <div className="container">
-        <NavBar metadata={metadata} favorites={favorites} onSearchChange={onSearchChange}/>
+        <NavBar metadata={metadata} favorites={favorites} onSearchChange={onSearchChange} handleCountrySearch={handleCountrySearch}/>
         <div>
           <h1 className='title'>World of Music</h1>
           <div className='mode-buttons'>
-            <button className='mode-button' onClick={handleModeButtonClick} value="solid">Mono Color with Borders</button>
-            <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hex Pattern with Random Colors!</button>
+            <button className='mode-button' onClick={handleModeButtonClick} value="solid">Drawn Polygons</button>
+            <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hexagons are the Bestagons!</button>
           </div>
           <CountryInfo username={username} countryArtists={countryArtists} nameOfCountry={nameOfCountry} />
-          {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} />}
+          {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} handlePolygonClick={handlePolygonClick} countryClicked={countryClicked}/>}
         </div>
         <Footer handleLogoutClick={handleLogoutClick}/>
       </div>
