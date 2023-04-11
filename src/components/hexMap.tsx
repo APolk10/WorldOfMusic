@@ -5,12 +5,14 @@ import mapOverlay from '../../data/mapOverlay.js';
 import axios from 'axios';
 
 interface hexMapProps {
-  handleCountrySelection({}, name: string):void
+  handleCountrySelection({}, name: string):void,
+  getCountryData(countryISOCode: string, countryName: string):void,
+  trackClick(countryISOCode: string, countryName: string):void
 }
 
 const animation = 'flashSideBar 1s linear infinite';
 
-const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
+const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection, trackClick, getCountryData }) => {
   let countryClicked = {};
   let countryRef = useRef(countryClicked);
 
@@ -21,19 +23,8 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
     countryRef.current = e;
     let countryISOCode: string = e.properties.ISO_A2;
     let countryName = e.properties.BRK_NAME;
-
-    axios.get(`${URL}/getCountryData/${countryISOCode}`, { withCredentials: true })
-    .then((res: { data: {} }) => {
-      handleCountrySelection(res.data, countryName)
-      document.getElementById('countryInfoContainer')!.style.animation = animation;
-      document.getElementById('countryInfoContainerToggle')!.style.animation = animation;
-    });
-
-    axios.post(`${URL}/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
-    .then((res: { data: {} }) => {
-      console.log(res.data);
-    })
-    .catch((err) => console.log(err))
+    getCountryData(countryISOCode, countryName);
+    trackClick(countryISOCode, countryName);
   }
 
   function randomRGB() {

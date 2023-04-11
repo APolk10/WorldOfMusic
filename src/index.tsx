@@ -155,7 +155,7 @@ const App: React.FC = () => {
             <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hexagons are the Bestagons!</button>
           </div>
           <CountryInfo username={username} countryArtists={countryArtists} nameOfCountry={nameOfCountry} />
-          {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} /> : <Map handleCountrySelection={handleCountrySelection} handlePolygonClick={handlePolygonClick} countryClicked={countryClicked}/>}
+          {mode === 'hex' ? <HexMap handleCountrySelection={handleCountrySelection} getCountryData={getCountryData} trackClick={trackClick} /> : <Map handleCountrySelection={handleCountrySelection} handlePolygonClick={handlePolygonClick} countryClicked={countryClicked}/>}
         </div>
         <Footer handleLogoutClick={handleLogoutClick}/>
       </div>
