@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
 import MusicTile from './musicTile';
-import axios from 'axios';
 
 interface DataProps {
   countryArtists: any[];

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import Globe from'react-globe.gl';
 import mapOverlay from '../../data/mapOverlay.js';
-import axios from 'axios';
 
 interface mapProps {
   handleCountrySelection(dataFromAPI: { artists: [] }, countryName: string):void,

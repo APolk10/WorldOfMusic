@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useRef } from 'react';
 import Globe from'react-globe.gl';
 import mapOverlay from '../../data/mapOverlay.js';
-import axios from 'axios';
 
 interface hexMapProps {
   handleCountrySelection({}, name: string):void,
@@ -10,9 +9,7 @@ interface hexMapProps {
   trackClick(countryISOCode: string, countryName: string):void
 }
 
-const animation = 'flashSideBar 1s linear infinite';
-
-const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection, trackClick, getCountryData }) => {
+const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection, getCountryData, trackClick }) => {
   let countryClicked = {};
   let countryRef = useRef(countryClicked);
 

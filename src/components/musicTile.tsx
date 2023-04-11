@@ -26,7 +26,10 @@ const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, username }) => 
 
   const handleFavoritesClick = () => {
     let artistName = artist.name;
+    addFavorite(artistName);
+  }
 
+  const addFavorite = (artistName: string) => {
     axios.post(`${URL}/addFavorite`, { country: nameOfCountry, name: artistName, username: username }, { withCredentials: true })
       .then((res) => console.log(res))
       .catch((res) => console.log(res));
