@@ -21,7 +21,8 @@ app.use(cors<Request>(({
   credentials: true,
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
   // change when making changes in development
-  origin: 'https://world-of-music.onrender.com'
+  // origin: 'https://world-of-music.onrender.com'
+  origin: 'http://localhost:3000'
   })));
 
 app.use(expressSession({
@@ -112,13 +113,6 @@ app.post('/existingUserLogin', (req: Request, res: Response) => {
     }
 })
 
-// app.get('/profile/:username', (req: Request, res: Response) => {
-//   let username = req.params.username;
-//   let sid = req.session;
-//   Controllers.fetchUserData(username)
-//     .then((response) => console.log(response))
-// })
-
 app.get('/getCountryData/:country', (req: Request, res: Response) => {
   let isoCode: string = req.params.country;
   axios.get(`${MB_url}artist/?query=country:${isoCode}`)
@@ -135,10 +129,16 @@ app.get('/getGlobalAnalytics', (req: Request, res: Response) => {
 app.post('/addFavorite', (req: Request, res: Response) => {
   let countryToAdd: string = req.body.country;
   let username: string = req.body.username;
+  let artist: string = req.body.name;
 
-  console.log('addfav:', countryToAdd, username)
+  Controllers.addFavorite(username, artist, countryToAdd);
+})
 
-  // Controllers.addFavorite(countryToAdd, username);
+app.post('/getFavorites', (req: Request, res: Response) => {
+  let { username } = req.body;
+  Controllers.getAllFavorites(username)
+    .then((response) => res.status(200).send(response.rows))
+    .catch((response) => console.log(response));
 })
 
 app.post('/removeFavorite', (req: Request, res: Response) => {

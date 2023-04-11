@@ -9,10 +9,11 @@ CREATE TABLE countries
 
 CREATE TABLE favorites
 (
-  id int PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   username varchar,
   artist varchar,
-  country varchar
+  country varchar,
+  UNIQUE (username, artist)
 );
 
 CREATE TABLE users
@@ -42,3 +43,4 @@ CREATE INDEX "IDX_session_expire" ON "session" ("expire");
 
 
 -- permissions update: GRANT ALL ON table_name TO role_name;
+-- GRANT USAGE, SELECT ON SEQUENCE favorites_id_seq to wom;

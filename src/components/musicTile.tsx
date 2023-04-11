@@ -11,14 +11,25 @@ interface TileProps {
     type: string,
   },
   nameOfCountry: string,
-  handleFavoritesClick():void
+  username: string
 }
 
-const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, handleFavoritesClick }) => {
+const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, username }) => {
+
+  // const URL = 'https://world-of-music.onrender.com';
+  const URL = 'http://localhost:3001';
 
   const redirectToSpotify = () => {
     const link = `https://open.spotify.com/search/${artist.name}`
     window.open(link, "_blank");
+  }
+
+  const handleFavoritesClick = () => {
+    let artistName = artist.name;
+
+    axios.post(`${URL}/addFavorite`, { country: nameOfCountry, name: artistName, username: username }, { withCredentials: true })
+      .then((res) => console.log(res))
+      .catch((res) => console.log(res));
   }
 
 

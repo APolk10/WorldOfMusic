@@ -17,8 +17,10 @@ const App: React.FC = () => {
   const[countryArtists, setCountryArtists] = useState([]);
   const[nameOfCountry, setNameOfCountry] = useState('');
   const[metadata, setMetadata] = useState([]);
+  const[favorites, setFavorites] = useState([]);
 
-  const URL = 'https://world-of-music.onrender.com';
+  // const URL = 'https://world-of-music.onrender.com';
+  const URL = 'http://localhost:3001';
 
   const handleModeButtonClick = (e: any):void => {
     setMode(e.target.value);
@@ -75,14 +77,22 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // check for existing session
+    let returnedUsername = '';
+
     axios.get(`${URL}/checkCredentials`, { withCredentials: true })
       .then((response) => {
         if (response.data === 'no name found') {
           console.log('no name found in database');
         } else if (response.data !== 'unauthorized client') {
-          setUsername(response.data);
-          setProfile(response.data);
+          let retrievedUsername = response.data;
+          setUsername(retrievedUsername);
+          setProfile(retrievedUsername);
           setInvalidUsername(false);
+          // fetch favorites
+          axios.post(`${URL}/getFavorites/${returnedUsername}`, { username: retrievedUsername }, { withCredentials: true })
+          .then((response) => setFavorites(response.data))
+          .catch((error) => console.log(error));
+
         } else {
           console.log('error checking credentials')
         }
@@ -92,13 +102,14 @@ const App: React.FC = () => {
     axios.get(`${URL}/getGlobalAnalytics`, { withCredentials: true })
       .then((response) => setMetadata(response.data))
       .catch((error) => console.log(error));
+
   }, [])
 
   return (
     <>
     { username ?
       <div className="container">
-        <NavBar metadata={metadata} onSearchChange={onSearchChange}/>
+        <NavBar metadata={metadata} favorites={favorites} onSearchChange={onSearchChange}/>
         <div>
           <h1 className='title'>World of Music</h1>
           <div className='mode-buttons'>

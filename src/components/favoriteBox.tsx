@@ -8,7 +8,27 @@ interface FavoriteBoxProps {
 const FavoriteBox: React.FC<FavoriteBoxProps> = ({ favorites }) => {
 
   return (
-    <div className='dataEntry'>Favs</div>
+    <>
+    <div className='box'>
+        <div className='boxHeader'>
+          <p>Your Favorites</p>
+          <div id='sortClicksBtns'>
+            <button id='sortClicksBtnDescend' type='button' >v</button>
+            <button  id='sortClicksBtnAscend' type='button' >v</button>
+          </div>
+        </div>
+        <div className='boxData'>
+          { favorites ? favorites.map(fav =>
+              <div className='dataEntryRow'>
+                <p>{fav.artist}</p>
+                <p>{fav.country}</p>
+              </div>)
+            : <div className='dataEntry'>Favorites Will Display Here</div>}
+        </div>
+      </div>
+
+    </>
+
   )
 };
 

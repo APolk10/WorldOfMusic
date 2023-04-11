@@ -8,10 +8,11 @@ import FavoriteBox from './favoriteBox';
 interface FunctionProps {
   onSearchChange(e: React.ChangeEvent<HTMLInputElement>):void,
   metadata: any[],
+  favorites: any[]
 }
 
 // pass an opener function to each child (analytics/fav/search) and when activated, open and pass props accordingly
-const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata }) => {
+const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata, favorites }) => {
   const[isOpen, setOpen] = useState(false);
   const[mode, setMode] = useState('global');
 
@@ -21,6 +22,18 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata }) => {
       adjustNavbar(navbar);
     }
     setMode(mode);
+  }
+
+  const toggleNavbarFavBtn = () => {
+    const navbar: HTMLElement = document.getElementById('navbar')!;
+    adjustNavbar(navbar);
+    setMode('favorites')
+  }
+
+  const toggleNavbarGlobalBtn = () => {
+    const navbar: HTMLElement = document.getElementById('navbar')!;
+    adjustNavbar(navbar);
+    setMode('global');
   }
 
   const restoreNavbar = (navbar: HTMLElement) => {
@@ -52,8 +65,14 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata }) => {
             </div>
             </label>
           </div>
-          <Favorites toggle={toggleNavbar}/>
-          <Analytics toggle={toggleNavbar}/>
+          <div className='navbarBoxes'>
+            <Favorites toggle={toggleNavbar}/>
+            <button className='navbarOpen' type='button' onClick={toggleNavbarFavBtn}>Expand</button>
+          </div>
+          <div className='navbarBoxes'>
+            <Analytics toggle={toggleNavbar}/>
+            <button className='navbarOpen' type='button' onClick={toggleNavbarGlobalBtn}>Expand</button>
+          </div>
         </div>
         { isOpen && mode === 'global' ?
           <div className='navbarLower'>
@@ -62,7 +81,7 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata }) => {
           </div>
         : isOpen && mode === 'favorites' ?
           <div className='navbarLower'>
-            <FavoriteBox favorites={['canada', 'usa']}></FavoriteBox>
+            <FavoriteBox favorites={favorites}></FavoriteBox>
           <button className='navbarCloseBtn' type='button' onClick={handleCloseButton}>Close</button>
       </div>
         :
