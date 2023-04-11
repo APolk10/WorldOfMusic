@@ -50,7 +50,7 @@ const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection }) => {
   return (
     <div className='mapContainer'>
       <Globe
-        width={w * .8}
+        width={w * .95}
         backgroundColor='black'
         globeImageUrl={'images/earth-dark.jpg'}
         backgroundImageUrl={'images/night-sky.png'}
