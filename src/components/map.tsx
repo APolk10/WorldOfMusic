@@ -6,14 +6,12 @@ import mapOverlay from '../../data/mapOverlay.js';
 interface mapProps {
   handleCountrySelection(dataFromAPI: { artists: [] }, countryName: string):void,
   handlePolygonClick(e: any):void,
-  countryClicked: any
+  countryClicked: any,
+  URL: string
 }
 
-const Map: React.FC<mapProps> = ({ handleCountrySelection, handlePolygonClick, countryClicked }) => {
+const Map: React.FC<mapProps> = ({ handleCountrySelection, handlePolygonClick, countryClicked, URL }) => {
   const[selectedCountry, setCountry] = useState({});
-
-  // const URL = 'https://world-of-music.onrender.com';
-  const URL = 'http://localhost:3001';
 
   function polygonColor() {
     return '#325240';

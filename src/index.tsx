@@ -23,8 +23,8 @@ const App: React.FC = () => {
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
 
-  // const URL = 'https://world-of-music.onrender.com';
-  const URL = 'http://localhost:3001';
+  const URL = 'https://world-of-music.onrender.com';
+  // const URL = 'http://localhost:3001';
 
   const animation = 'flashSideBar 1s linear infinite';
 
@@ -153,9 +153,9 @@ const App: React.FC = () => {
             <button className='mode-button' onClick={handleModeButtonClick} value="solid">Drawn Polygons</button>
             <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hexagons are the Bestagons!</button>
           </div>
-          <CountryInfo username={username} countryArtists={countryArtists} nameOfCountry={nameOfCountry} />
+          <CountryInfo username={username} countryArtists={countryArtists} nameOfCountry={nameOfCountry} URL={URL}/>
           { mode === 'hex' ?
-          <HexMap handleCountrySelection={handleCountrySelection} getCountryData={getCountryData} trackClick={trackClick} /> : <Map handleCountrySelection={handleCountrySelection} handlePolygonClick={handlePolygonClick} countryClicked={countryClicked}/> }
+          <HexMap handleCountrySelection={handleCountrySelection} getCountryData={getCountryData} trackClick={trackClick} URL={URL} /> : <Map handleCountrySelection={handleCountrySelection} handlePolygonClick={handlePolygonClick} countryClicked={countryClicked} URL={URL} /> }
         </div>
         <Footer handleLogoutClick={handleLogoutClick}/>
       </div>

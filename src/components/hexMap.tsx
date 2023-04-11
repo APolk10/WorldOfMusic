@@ -6,15 +6,13 @@ import mapOverlay from '../../data/mapOverlay.js';
 interface hexMapProps {
   handleCountrySelection({}, name: string):void,
   getCountryData(countryISOCode: string, countryName: string):void,
-  trackClick(countryISOCode: string, countryName: string):void
+  trackClick(countryISOCode: string, countryName: string):void,
+  URL: string
 }
 
-const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection, getCountryData, trackClick }) => {
+const HexMap: React.FC<hexMapProps> = ({ handleCountrySelection, getCountryData, trackClick, URL }) => {
   let countryClicked = {};
   let countryRef = useRef(countryClicked);
-
-  // const URL = 'https://world-of-music.onrender.com';
-  const URL = 'http://localhost:3001';
 
   function handlePolygonClick(e: any) {
     countryRef.current = e;
