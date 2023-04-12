@@ -1,6 +1,5 @@
 import * as React from 'react';
 import axios from 'axios';
-import { motion } from 'framer-motion';
 
 interface TileProps {
   artist: {
