@@ -1,5 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
 interface TileProps {
   artist: {
@@ -9,6 +10,9 @@ interface TileProps {
       { name: string }
     ],
     type: string,
+    'life-span': {
+      begin: string
+    },
   },
   nameOfCountry: string,
   username: string,
@@ -22,9 +26,12 @@ const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, username, URL }
     window.open(link, "_blank");
   }
 
-  const handleFavoritesClick = () => {
-    let artistName = artist.name;
-    addFavorite(artistName);
+  const handleFavoritesClick = (e: React.SyntheticEvent) => {
+    const button = e.target as HTMLButtonElement;
+    const tag = (e.target as HTMLButtonElement).value;
+    const tile: HTMLElement = document.getElementById(tag)!;
+    tile.style.backgroundColor = 'green';
+    button.style.display = 'none';
   }
 
   const addFavorite = (artistName: string) => {
@@ -36,28 +43,33 @@ const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, username, URL }
 
   return (
     <div className='tileBox'>
-       <div className='tile'>
+       <div className='tile' id={artist.name.trim()}>
         <div className='tileInner'>
-          <div className='tileInfoHeader'>Country of Origin:
+          <div className='tileRow'>
+            <p className='tileInfoHeader'>Country of Origin:</p>
             <p className='tileInfoData'>{nameOfCountry}</p>
           </div>
-          <div className='tileInfoHeader'>Full Name:
-            <p className='tileInfoData'>{artist.name}</p>
+          <div className='tileRow'>
+            <p className='tileInfoHeader'>Name:</p>
+            <p className='tileInfoData'>{artist.name.trim()}</p>
           </div>
-          <div className='tileInfoHeader'>Alternative Name:
-            <p className='tileInfoData'>{artist.aliases ? artist.aliases[0].name : 'unknown'}</p>
+          <div className='tileRow'>
+            <p className='tileInfoHeader'>Local Name:</p>
+            <p className='tileInfoData'>{artist.aliases ? artist.aliases[0].name.trim() : 'not available'}</p>
           </div>
-          <div className='tileInfoHeader'>Solo or Group:
+          <div className='tileRow'>
+            <p className='tileInfoHeader'>Birth Date</p>
+            <p className='tileInfoData'>{artist['life-span'].begin ? artist['life-span'].begin : 'not available'}</p>
+          </div>
+          <div className='tileRow'>
+            <p className='tileInfoHeader'>Type:</p>
             <p className='tileInfoData'>{artist.type === 'Person' ? 'solo' : 'group'}</p>
           </div>
         </div>
-        <div>
           <div className='buttonsDiv'>
-            <button type='submit' className='spotifyButton' onClick={redirectToSpotify}>Find Their Music</button>
-            <button type='button' className='addFavButton' onClick={handleFavoritesClick}>Favorite This</button>
-          </div>
+            <button type='submit' className='spotifyButton' onClick={redirectToSpotify}>Listen</button>
+            <button type='button' value={artist.name.trim()} className='addFavButton' onClick={handleFavoritesClick}>Favorite Artist</button>
         </div>
-
        </div>
     </div>
   )

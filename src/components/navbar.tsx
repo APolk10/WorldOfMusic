@@ -28,12 +28,14 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata, favorites, 
   const toggleNavbarFavBtn = () => {
     const navbar: HTMLElement = document.getElementById('navbar')!;
     adjustNavbar(navbar);
+    setOpen(true);
     setMode('favorites')
   }
 
   const toggleNavbarGlobalBtn = () => {
     const navbar: HTMLElement = document.getElementById('navbar')!;
     adjustNavbar(navbar);
+    setOpen(true);
     setMode('global');
   }
 
@@ -311,11 +313,11 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata, favorites, 
           </div>
           <div className='navbarBoxes'>
             <Favorites toggle={toggleNavbar}/>
-            <button className='navbarOpen' type='button' onClick={toggleNavbarFavBtn}>Expand</button>
+            <button className='navbarOpen' type='button' onClick={toggleNavbarFavBtn}>View</button>
           </div>
           <div className='navbarBoxes'>
             <Analytics toggle={toggleNavbar}/>
-            <button className='navbarOpen' type='button' onClick={toggleNavbarGlobalBtn}>Expand</button>
+            <button className='navbarOpen' type='button' onClick={toggleNavbarGlobalBtn}>View</button>
           </div>
         </div>
         { isOpen && mode === 'global' ?

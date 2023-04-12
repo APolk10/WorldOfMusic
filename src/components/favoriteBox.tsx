@@ -12,13 +12,13 @@ const FavoriteBox: React.FC<FavoriteBoxProps> = ({ favorites }) => {
         <div className='boxHeader'>
           <p>Your Favorites</p>
           <div id='sortClicksBtns'>
-            <button id='sortClicksBtnDescend' type='button' >v</button>
-            <button  id='sortClicksBtnAscend' type='button' >v</button>
+            {/* <button id='sortClicksBtnDescend' type='button' >v</button>
+            <button  id='sortClicksBtnAscend' type='button' >v</button> */}
           </div>
         </div>
         <div className='boxData'>
           { favorites ? favorites.map(fav =>
-              <div className='dataEntryRow'>
+              <div className='dataEntryRow' key={fav.artist}>
                 <p>{fav.artist}</p>
                 <p>{fav.country}</p>
               </div>)

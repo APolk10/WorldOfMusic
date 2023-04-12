@@ -52,10 +52,10 @@ const DataBox: React.FC<dataBoxProps> = ({ data }) => {
         </div>
         <div className='boxData'>
           {reshapedData.map(country => (
-            <div className='dataEntry' key={country[0]}>
-              <div className='dataEntryRow' key={country[0] + 'row'}>
-                <p key={country[0] + 'name'}>{country[0]}</p>
-                <p key={country[0] + 'clicks'}>Clicks: {country[1]}</p>
+            <div className='dataEntry' key={country[0] + 'entry'}>
+              <div className='dataEntryRow'>
+                <p>{country[0]}</p>
+                <p>Clicks: {country[1]}</p>
               </div>
             </div>))}
         </div>
