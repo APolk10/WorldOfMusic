@@ -47,8 +47,8 @@ const Login: React.FC<loginProps> = ({ checkUser, createUser, flag }) => {
           <div className='login'>
             <p className='loginText'>Please enter your username and pin number.</p>
             <input type='input' onChange={handleUsernameInput} placeholder={'USERNAME'}></input>
-            { flag ? <p className='loginError'>This username is taken</p> : <></>}
             <input type='input' onChange={handlePinInput} placeholder={'PIN'}></input>
+            { flag ? <p className='loginError'>This username or pin is incorrect</p> : <></>}
             <button type='button' onClick={handleCheckUserSubmit}>Submit</button>
           </div>
         )

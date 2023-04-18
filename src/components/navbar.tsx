@@ -60,8 +60,8 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata, favorites, 
     <div>
       <div className='navbar' id='navbar'>
         <div className='navbarUpper'>
-          <div>
-            <label className='searchFunctionLabelBox'>Find A Country
+          <div className='navbarBoxes'>
+            <p className='searchFunctionLabelBox'>Find A Country</p>
             <div className='searchInputs'>
               <input id='searchForCountryInput' type='search' placeholder='country name' list='countryName' onChange={onSearchChange}>
               </input>
@@ -307,9 +307,8 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata, favorites, 
                   <option value="Zambia" />
                   <option value="Zimbabwe" />
                 </datalist>
-              <button id='searchForCountryButton' type='submit' onClick={handleCountrySearch}>Go!</button>
+              <button id='searchForCountryButton' type='submit' onClick={handleCountrySearch}>&#128269;</button>
             </div>
-            </label>
           </div>
           <div className='navbarBoxes'>
             <Favorites toggle={toggleNavbar}/>

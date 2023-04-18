@@ -5,7 +5,6 @@ import * as cors from 'cors';
 import * as Controllers from './controllers/index'
 import db from '../database//index';
 import * as path from 'path';
-import { count } from 'console';
 const axios = require('axios').default;
 const expressSession = require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
@@ -21,8 +20,8 @@ app.use(cors<Request>(({
   credentials: true,
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
   // change when making changes in development
-  origin: 'https://world-of-music.onrender.com'
-  // origin: 'http://localhost:3000'
+  // origin: 'https://world-of-music.onrender.com'
+  origin: 'http://localhost:3000'
   })));
 
 app.use(expressSession({
@@ -106,8 +105,13 @@ app.post('/existingUserLogin', (req: Request, res: Response) => {
   if (username && pin) {
     Controllers.checkForUser(username, pin, session_id)
     .then((response) => {
-      req.session.authenticated = true;
-      res.status(200).send(response.rows)
+      if (response.rows.length < 1) {
+        // return invalid credentials
+        res.status(200).send('invalid credentials')
+      } else {
+        req.session.authenticated = true;
+        res.status(200).send(response.rows)
+      }
   })
     .catch((error) => res.send(error))
     }
@@ -131,7 +135,9 @@ app.post('/addFavorite', (req: Request, res: Response) => {
   let username: string = req.body.username;
   let artist: string = req.body.name;
 
-  Controllers.addFavorite(username, artist, countryToAdd);
+  Controllers.addFavorite(username, artist, countryToAdd)
+    .then((response) => console.log(response))
+    .catch((response) => console.log(response));
 })
 
 app.post('/getFavorites', (req: Request, res: Response) => {

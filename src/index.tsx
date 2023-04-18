@@ -23,8 +23,8 @@ const App: React.FC = () => {
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
 
-  const URL = 'https://world-of-music.onrender.com';
-  // const URL = 'http://localhost:3001';
+  // const URL = 'https://world-of-music.onrender.com';
+  const URL = 'http://localhost:3001';
 
   const animation = 'flashSideBar 1s linear infinite';
 
@@ -66,8 +66,8 @@ const App: React.FC = () => {
 
   const trackClick = (countryISOCode: string, countryName: string) => {
     axios.post(`${URL}/trackClick`, { country: countryName, iso: countryISOCode}, { withCredentials: true })
-    .then((res: { data: {} }) => {
-      console.log(res.data);
+    .then((res) => {
+      // console.log(res.data);
     })
     .catch((err) => console.log(err))
   }
@@ -86,7 +86,7 @@ const App: React.FC = () => {
     axios.post(`${URL}/existingUserLogin`,{ username: username, pin: pin }, { withCredentials: true })
     .then((response) => {
       let name = response.data;
-      if (name === 'taken') {
+      if (name === 'invalid credentials') {
         setInvalidUsername(true);
       } else {
         setInvalidUsername(false);
@@ -120,7 +120,7 @@ const App: React.FC = () => {
     axios.get(`${URL}/checkCredentials`, { withCredentials: true })
       .then((response) => {
         if (response.data === 'no name found') {
-          console.log('no name found in database');
+          // console.log('sessionID is invalid');
         } else if (response.data !== 'unauthorized client') {
           let retrievedUsername = response.data;
           setUsername(retrievedUsername);

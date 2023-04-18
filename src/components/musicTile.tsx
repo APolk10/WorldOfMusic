@@ -29,7 +29,8 @@ const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, username, URL }
     const button = e.target as HTMLButtonElement;
     const tag = (e.target as HTMLButtonElement).value;
     const tile: HTMLElement = document.getElementById(tag)!;
-    tile.style.backgroundColor = 'green';
+    tile.style.border = 'green solid 4px';
+    tile.style.backgroundColor = 'lightgreen';
     button.style.display = 'none';
   }
 

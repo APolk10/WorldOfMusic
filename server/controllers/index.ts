@@ -25,7 +25,7 @@ export const getAllFavorites = (user: string) => {
 }
 
 export const addFavorite = (user: string, artist: string, countryToAdd: string) => {
-  return logFavorite(user, artist, countryToAdd)
+  return logFavorite(user, artist, countryToAdd);
 }
 
 export const deleteFavorite = (user: string, countryToRemove: string) => {
