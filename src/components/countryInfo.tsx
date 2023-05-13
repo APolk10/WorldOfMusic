@@ -31,8 +31,20 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry, usern
   return (
     <div className='countryInfoContainer' id='countryInfoContainer'>
       { open === true ?
-      <div className='carousel'>
-        { countryArtists.length ? countryArtists.map((artist) => <MusicTile key={artist.name} artist={artist} nameOfCountry={nameOfCountry} username={username} URL={URL} />) : <div className='placeholderText'>{header.text}</div>}
+      <div className='carouselBox'>
+
+        { countryArtists.length ?
+        <div className='carouselHeader'>
+          <p className='countryTitle'>{nameOfCountry}</p>
+          <p className='carouselTitle'>Scroll through artists using the scrollbar at the bottom.</p>
+        </div>
+        : <></> }
+        <div className='carousel'>
+          { countryArtists.length ?
+          countryArtists.map((artist) =>
+          <MusicTile key={artist.name} artist={artist} nameOfCountry={nameOfCountry} username={username} URL={URL} />)
+          : <div className='placeholderText'>{header.text}</div> }
+        </div>
         <button className='closeButton' onClick={handleSideBarButtonPush}>X</button>
       </div> : <button className='openButton' type='button' onClick={handleSideBarButtonPush}>&rarr;</button>}
     </div>

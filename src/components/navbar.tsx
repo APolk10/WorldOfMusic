@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Favorites from './favorites';
 import Analytics from './analytics';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DataBox from './dataBox';
 import FavoriteBox from './favoriteBox';
 
@@ -47,7 +47,7 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata, favorites, 
 
   const adjustNavbar = (navbar: HTMLElement) => {
     navbar.style.height = '96vh';
-    navbar.style.backgroundColor = 'rgba(69, 233, 233, 0.25)'
+    navbar.style.backgroundColor = 'rgba(69, 233, 233, 0.5)'
     setOpen(true);
   }
 
@@ -55,6 +55,10 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata, favorites, 
     const navbar: HTMLElement = document.getElementById('navbar')!;
     restoreNavbar(navbar);
   }
+
+  useEffect(() => {
+
+  }, [])
 
   return (
     <div>

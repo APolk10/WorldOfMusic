@@ -23,8 +23,8 @@ const App: React.FC = () => {
   const[countryClicked, setClicked] = useState();
   const[selectedCountry, setCountry] = useState({});
 
-  const URL = 'https://world-of-music.onrender.com';
-  // const URL = 'http://localhost:3001';
+  // const URL = 'https://world-of-music.onrender.com';
+  const URL = 'http://localhost:3001';
 
   const animation = 'flashSideBar 1s linear infinite';
 
@@ -117,6 +117,7 @@ const App: React.FC = () => {
     // check for existing session
     let returnedUsername = '';
 
+
     axios.get(`${URL}/checkCredentials`, { withCredentials: true })
       .then((response) => {
         if (response.data === 'no name found') {
@@ -140,6 +141,8 @@ const App: React.FC = () => {
     axios.get(`${URL}/getGlobalAnalytics`, { withCredentials: true })
       .then((response) => setMetadata(response.data))
       .catch((error) => console.log(error));
+
+
   }, [])
 
   return (

@@ -296,7 +296,7 @@ color: whitesmoke;
 	border-top-right-radius: 0%;
 	border-bottom-right-radius: 0%;
 	/* background-image: url('https://pixabay.com/get/g9f3ae20c88ef9dea30b90641cb268e9f2be5d1d9b97024ec65c1b10ffe3879f7f712bb651e650dcc8988541c73be662e_1280.png'); */
-	background-color: rgb(30, 29, 29);
+	background-color: rgba(30, 29, 29, 0.8);
 	background-size: cover;
 	height: 76vh;
 	width: 100vw;
@@ -314,9 +314,45 @@ color: whitesmoke;
 	height: 50vh;
 	font-size: 4vw;
 }
+.carouselHeader {
+	height: 20%;
+}
+.countryTitle {
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 75%;
+	font-size: 2.65rem;
+	color: white;
+}
+.carouselTitle {
+	display: flex;
+	width: 100%;
+	font-size: 1.9rem;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	height: 25%;
+}
+.carouselBox {
+	height: 100%;
+}
+.carousel {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 3vw;
+	overflow-x: auto;
+	overflow-y: hidden;
+	background-color: rgba(0, 0, 0, 0);
+	transition: 1.5s ease-in-out;
+	width: 100vw;
+	height: 78%;
+}
 .carousel::-webkit-scrollbar {
-	height: 8vh;
-	background-color: rgba(0, 0, 0, 0.841);
+	height: 4vh;
+	background-color: rgba(81, 81, 81, 0.863);
+	border-bottom: black 2px solid;
 }
 .carousel::-webkit-scrollbar-thumb {
 	height: 10vh;
@@ -350,18 +386,6 @@ color: whitesmoke;
 .closeButton:hover {
 	background-color: rgb(154, 104, 98);
 	transform: scale(1.25);
-}
-.carousel {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 3vw;
-	overflow-x: auto;
-	overflow-y: hidden;
-	background-color: rgba(0, 0, 0, .1);
-	transition: 1.5s ease-in-out;
-	width: 100vw;
-	height: 100%;
 }
 .tile {
 	display: flex;
