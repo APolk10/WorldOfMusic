@@ -136,11 +136,12 @@ app.post('/addFavorite', (req: Request, res: Response) => {
   let artist: string = req.body.name;
 
   Controllers.addFavorite(username, artist, countryToAdd)
-    .then((response) => console.log(response))
+    .then((response) => res.status(200).send('artist saved'))
     .catch((response) => console.log(response));
 })
 
 app.post('/getFavorites', (req: Request, res: Response) => {
+  console.log('getfavs')
   let { username } = req.body;
   Controllers.getAllFavorites(username)
     .then((response) => res.status(200).send(response.rows))

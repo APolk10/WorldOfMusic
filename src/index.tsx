@@ -112,6 +112,12 @@ const App: React.FC = () => {
       })
   }
 
+  const getFavorites = (username: string) => {
+    axios.post(`${URL}/getFavorites`, { username: username }, { withCredentials: true })
+    .then((response) => setFavorites(response.data))
+    .catch((error) => console.log(error));
+  }
+
 
   useEffect(() => {
     // check for existing session
@@ -128,7 +134,7 @@ const App: React.FC = () => {
           setProfile(retrievedUsername);
           setInvalidUsername(false);
           // fetch favorites
-          axios.post(`${URL}/getFavorites/${returnedUsername}`, { username: retrievedUsername }, { withCredentials: true })
+          axios.post(`${URL}/getFavorites`, { username: retrievedUsername }, { withCredentials: true })
           .then((response) => setFavorites(response.data))
           .catch((error) => console.log(error));
 
@@ -156,7 +162,7 @@ const App: React.FC = () => {
             <button className='mode-button' onClick={handleModeButtonClick} value="solid">Drawn Polygons</button>
             <button className='mode-button' onClick={handleModeButtonClick} value="hex">Hexagons are the Bestagons!</button>
           </div>
-          <CountryInfo username={username} countryArtists={countryArtists} nameOfCountry={nameOfCountry} URL={URL}/>
+          <CountryInfo username={username} getFavorites={getFavorites} countryArtists={countryArtists} nameOfCountry={nameOfCountry} URL={URL}/>
           { mode === 'hex' ?
           <HexMap handleCountrySelection={handleCountrySelection} getCountryData={getCountryData} trackClick={trackClick} URL={URL} /> : <Map handleCountrySelection={handleCountrySelection} handlePolygonClick={handlePolygonClick} countryClicked={countryClicked} URL={URL} /> }
         </div>

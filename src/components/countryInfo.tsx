@@ -6,10 +6,11 @@ interface DataProps {
   countryArtists: any[],
   nameOfCountry: string,
   username: string,
-  URL: string
+  URL: string,
+  getFavorites(username: string): void
 }
 
-const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry, username, URL }) => {
+const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry, username, URL, getFavorites }) => {
   const[open, setOpen] = useState(false);
   const[header, setHeader] = useState({ text: 'Click a country to find music!'})
 
@@ -42,7 +43,7 @@ const CountryInfo: React.FC<DataProps> = ({ countryArtists, nameOfCountry, usern
         <div className='carousel'>
           { countryArtists.length ?
           countryArtists.map((artist) =>
-          <MusicTile key={artist.name} artist={artist} nameOfCountry={nameOfCountry} username={username} URL={URL} />)
+          <MusicTile key={artist.name} getFavorites={getFavorites} artist={artist} nameOfCountry={nameOfCountry} username={username} URL={URL} />)
           : <div className='placeholderText'>{header.text}</div> }
         </div>
         <button className='closeButton' onClick={handleSideBarButtonPush}>X</button>

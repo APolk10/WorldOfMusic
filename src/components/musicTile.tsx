@@ -15,10 +15,11 @@ interface TileProps {
   },
   nameOfCountry: string,
   username: string,
-  URL: string
+  URL: string,
+  getFavorites(username: string):void
 }
 
-const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, username, URL }) => {
+const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, username, URL, getFavorites }) => {
 
   const redirectToSpotify = () => {
     const link = `https://open.spotify.com/search/${artist.name}`
@@ -32,11 +33,12 @@ const MusicTile: React.FC<TileProps> = ({ artist, nameOfCountry, username, URL }
     tile.style.border = 'green solid 4px';
     tile.style.backgroundColor = 'lightgreen';
     button.style.display = 'none';
+    addFavorite(artist.name);
   }
 
   const addFavorite = (artistName: string) => {
     axios.post(`${URL}/addFavorite`, { country: nameOfCountry, name: artistName, username: username }, { withCredentials: true })
-      .then((res) => console.log(res))
+      .then((res) => {getFavorites(username); console.log(res)})
       .catch((res) => console.log(res));
   }
 
