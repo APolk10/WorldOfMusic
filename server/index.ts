@@ -141,7 +141,6 @@ app.post('/addFavorite', (req: Request, res: Response) => {
 })
 
 app.post('/getFavorites', (req: Request, res: Response) => {
-  console.log('getfavs')
   let { username } = req.body;
   Controllers.getAllFavorites(username)
     .then((response) => res.status(200).send(response.rows))
