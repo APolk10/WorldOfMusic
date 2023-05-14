@@ -335,7 +335,7 @@ const NavBar: React.FC<FunctionProps> = ({ onSearchChange, metadata, favorites, 
       </div>
         :
         <div className='navBarUpper'>
-        </div>}
+        </div> }
       </div>
     </div>
   )

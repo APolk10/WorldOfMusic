@@ -295,7 +295,6 @@ color: whitesmoke;
 #countryInfoContainerToggle {
 	border-top-right-radius: 0%;
 	border-bottom-right-radius: 0%;
-	/* background-image: url('https://pixabay.com/get/g9f3ae20c88ef9dea30b90641cb268e9f2be5d1d9b97024ec65c1b10ffe3879f7f712bb651e650dcc8988541c73be662e_1280.png'); */
 	background-color: rgba(30, 29, 29, 0.8);
 	background-size: cover;
 	height: 80%;

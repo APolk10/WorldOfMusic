@@ -106,9 +106,9 @@ const App: React.FC = () => {
           setUsername(user);
         }
       })
-      .catch((reponse) => {
+      .catch((response) => {
         // assumes username is taken
-        console.log('error creating user');
+        console.log('error creating user', response);
       })
   }
 
@@ -118,26 +118,18 @@ const App: React.FC = () => {
     .catch((error) => console.log(error));
   }
 
-
   useEffect(() => {
-    // check for existing session
-    let returnedUsername = '';
-
 
     axios.get(`${URL}/checkCredentials`, { withCredentials: true })
       .then((response) => {
         if (response.data === 'no name found') {
-          // console.log('sessionID is invalid');
+          console.log('session ID is invalid');
         } else if (response.data !== 'unauthorized client') {
           let retrievedUsername = response.data;
           setUsername(retrievedUsername);
           setProfile(retrievedUsername);
           setInvalidUsername(false);
-          // fetch favorites
-          axios.post(`${URL}/getFavorites`, { username: retrievedUsername }, { withCredentials: true })
-          .then((response) => setFavorites(response.data))
-          .catch((error) => console.log(error));
-
+          getFavorites(retrievedUsername);
         } else {
           console.log('error checking credentials')
         }
@@ -147,7 +139,6 @@ const App: React.FC = () => {
     axios.get(`${URL}/getGlobalAnalytics`, { withCredentials: true })
       .then((response) => setMetadata(response.data))
       .catch((error) => console.log(error));
-
 
   }, [])
 
